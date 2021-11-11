@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jasmine Spec Runner</title>
+
+    <script type="text/javascript">
+        // some global variables
+        var app_context = null;
+        var test_username = '<%= options.auth.username %>';
+    </script>
+    
+    <script type="text/javascript" src="<%= options.auth.server %>/apps/<%= options.sdk %>/sdk-debug.js"></script>
+    <script type="text/javascript" src="<%= options.auth.server %>/apps/<%= options.sdk %>/lib/analytics/analytics-all.js"></script>
+        
+    <% with (scripts) ***REMOVED*** %>
+    <% [].concat(jasmine, vendor, reporters).forEach(function(script)***REMOVED*** %>
+    <script src="<%= script %>"></script>
+    <% ***REMOVED***) %>
+    <% ***REMOVED***; %>
+    
+    <% with (scripts) ***REMOVED*** %>
+    <% [].concat(helpers, specs).forEach(function(script)***REMOVED*** %>
+    <script src="<%= script %>"></script>
+    <% ***REMOVED***) %>
+    <% ***REMOVED***; %>
+    
+        
+    <script type="text/javascript">
+        //Redefine onReady - bug in phantomjs such that onload isn't triggered for <link>, so the default Rally onReady won't work consistently
+
+        Ext.override(Rally.sdk.Bootstrapper,***REMOVED***
+            onReady: function(onready) ***REMOVED***
+                if (!Rally.environment) ***REMOVED***
+                    Ext.create('Rally.sdk.env.Global').setup();
+                ***REMOVED***
+                var context = Rally.environment.getContext();
+
+                var sdkInfo = this.getSdkInfo();
+
+                if (!context || (sdkInfo.project && sdkInfo.project !== '/project/' + context.getProject().ObjectID)) ***REMOVED***
+                    var loader = this._getContextLoader();
+                    loader.load(***REMOVED***
+                        project: sdkInfo.project,
+                        success: function (rawContext) ***REMOVED***
+                            rawContext.scope.up = Ext.isDefined(sdkInfo.projectScopeUp) ? sdkInfo.projectScopeUp : false;
+                            rawContext.scope.down = Ext.isDefined(sdkInfo.projectScopeDown) ? sdkInfo.projectScopeDown : true;
+    
+                            if (window.sdkConfig && window.sdkConfig.apiBaseUrl) ***REMOVED***
+                                rawContext.apiBaseUrl = window.sdkConfig.apiBaseUrl;
+                            ***REMOVED***
+    
+                            Rally.environment.externalContext = rawContext;
+                            //this._loadResources();
+                            onready();
+                        ***REMOVED***,
+                        scope: this
+                    ***REMOVED***);
+                ***REMOVED***
+                    
+                onready();
+            ***REMOVED***
+/*,
+            onReady: function (onReady) ***REMOVED***
+                if (this._ready) ***REMOVED***
+                    return onReady();
+                ***REMOVED*** else if (this._readyInProgress) ***REMOVED***
+                    this._onReadyFns.push(onReady);
+                ***REMOVED*** else ***REMOVED***
+                    this._readyInProgress = true;
+                    this._onReadyFns = [onReady];
+                    
+                    if (!Rally.environment) ***REMOVED***
+                        Ext.create('Rally.sdk.env.Global').setup();
+                    ***REMOVED***
+        
+                    //this._secureJsonPRequests();
+        
+                    var context = Rally.environment.getContext();
+                    var sdkInfo = this.getSdkInfo();
+                    if (!context || (sdkInfo.project && sdkInfo.project !== '/project/' + context.getProject().ObjectID)) ***REMOVED***
+                        var loader = this._getContextLoader();
+                        loader.load(***REMOVED***
+                            project: sdkInfo.project,
+                            success: function (rawContext) ***REMOVED***
+                                rawContext.scope.up = Ext.isDefined(sdkInfo.projectScopeUp) ? sdkInfo.projectScopeUp : false;
+                                rawContext.scope.down = Ext.isDefined(sdkInfo.projectScopeDown) ? sdkInfo.projectScopeDown : true;
+        
+                                if (window.sdkConfig && window.sdkConfig.apiBaseUrl) ***REMOVED***
+                                    rawContext.apiBaseUrl = window.sdkConfig.apiBaseUrl;
+                                ***REMOVED***
+        
+                                Rally.environment.externalContext = rawContext;
+                                this._loadResources();
+                            ***REMOVED***,
+                            scope: this
+                        ***REMOVED***);
+                    ***REMOVED*** else ***REMOVED***
+                        this._loadResources();
+                    ***REMOVED*** 
+                    onReady();
+                ***REMOVED***
+            ***REMOVED****/
+        ***REMOVED***);
+        
+                
+       // Rally.onReady(function () ***REMOVED***
+       
+       var afterWait = function() ***REMOVED***
+            // get us logged in
+            var token = '<%= options.auth.username %>:<%= options.auth.password %>';
+            var auth_string = 'Basic ' + Base64.encode(token);
+        
+            // making a very simple query to establish authentication
+            var url = '<%= options.server %>/slm/webservice/v2.0/workspace?query=&pagesize=1'
+            Ext.Ajax.useDefaultXhrHeader = false;
+            Ext.Ajax.withCredentials=true;
+            
+            Ext.Ajax.request(***REMOVED***
+                url: url,
+                method: 'GET',
+                headers: ***REMOVED***
+                    'Authorization': auth_string
+                ***REMOVED***,
+                success: function(response)***REMOVED***
+                    // when we've successfully logged in, load our scripts
+                    Rally.loadScripts(<%= JSON.stringify(options.js_files) %>,
+                    function() ***REMOVED***        
+                        // define an app that we're loading to set context  TODO: Is this necessary?
+                        Ext.define('TestApp',***REMOVED***
+                            extend: 'Rally.app.App',
+                            componentCls: 'app',
+                            launch: function() ***REMOVED***
+                                // when app is loaded, we can run our jasmine tests!
+                                var jasmineEnv = jasmine.getEnv();
+    
+                                jasmineEnv.updateInterval = 1000;
+                                var htmlReporter = new jasmine.HtmlReporter();
+                                jasmineEnv.addReporter(htmlReporter);
+    
+                                jasmineEnv.specFilter = function (spec) ***REMOVED***
+                                    return htmlReporter.specFilter(spec);
+                                ***REMOVED***;
+    
+                                jasmineEnv.execute();
+                            ***REMOVED***
+                        ***REMOVED***);
+                        console.warn("Ignore the context.getUser null error below!");
+                        Rally.launchApp('TestApp', ***REMOVED***
+                            name: 'Test Accessible App'
+                        ***REMOVED***);
+                    ***REMOVED***, true);
+                ***REMOVED***
+            ***REMOVED***);
+        // ***REMOVED***);
+        ***REMOVED***
+        
+        setTimeout(afterWait(), 1000);
+    </script>
+    <link rel="stylesheet" type="text/css" href="src/style/app.css">
+    
+    <link rel="stylesheet" type="text/css" href=".grunt/grunt-contrib-jasmine/jasmine.css">
+</head>
+<body></body>
+</html>
