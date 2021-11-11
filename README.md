@@ -1,8 +1,30 @@
-# Portfolio Item Tree with Dependencies
+# Portfolio Item Tree with Dependencies v2
+
+This version has been forked and modified from the original version that can be found here:
+https://github.com/nikantonelli/PortfolioItem-Tree-With-Dependencies 
+
 
 ## Summary/Description
 
-![screenshot](./images/screenshot.png "This is an example")
+Changes from the original version: 
+- refactoring
+- removed user stories from view and ability to select a lowest level portfolio item 
+- updated options for dot colors (DisplayColor, Health, or Implied State -- see below for details)
+- updated the detail window to show the following:
+      - Artifact Card
+      - Notes field
+      - Feature Count and Implied State by Team
+      - Risks with link to risks window
+- removed cumulative flow chart from detail view 
+- removed filter from view (this may be added back in)
+- removed grids from detail view
+
+### Implied State 
+In this version of the app, the implied state is used in several places.  The implied state of a portfolio item uses existing fields to determine what state the portfolio item is in.  The implied states here are: 
+* Not Defined (DirectChildrenCount = 0/LeafStoryCount=0)
+* Not Started (ActualStartDate not populated)
+* In Progress (ActualStartDate populated, ActualEndDate not populated)
+* Done (ActualEndDate populated)
 
 ## Development Notes
 
