@@ -15,7 +15,6 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             hideArchived: true,
             showFilter: true,
             allowMultiSelect: false,
-            useColour: false,
             colorOption: 'Implied State'
         }
     },
@@ -176,25 +175,25 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             gApp._refreshTree();
         },
     
-        _getColourFromModel: function(record)
-        {
-            var theStore = null;
+        // _getColourFromModel: function(record)
+        // {
+        //     var theStore = null;
     
-             //We can find the original type that the state Store is from by looking into the value of the filters
-            _.each(gApp.stateStores, function(store) {
-                if (store.modelType.type == record.get('_type')){
-                    theStore = store;
-                }
-            });
-            if (theStore) {
-                return theStore.findBy( function(theState) {    //Get the index of the store from the State Name
-                    return theState.get('Name') == record.get('State').Name;
-                });
-            }
-            else {
-                return 0;
-            }
-        },
+        //      //We can find the original type that the state Store is from by looking into the value of the filters
+        //     _.each(gApp.stateStores, function(store) {
+        //         if (store.modelType.type == record.get('_type')){
+        //             theStore = store;
+        //         }
+        //     });
+        //     if (theStore) {
+        //         return theStore.findBy( function(theState) {    //Get the index of the store from the State Name
+        //             return theState.get('Name') == record.get('State').Name;
+        //         });
+        //     }
+        //     else {
+        //         return 0;
+        //     }
+        // },
         getPercentDoneName: function(){
             //TODO depends on setting 
             return "PercentDoneByStoryPlanEstimate";
@@ -230,9 +229,10 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
                 if (d.data.record.get('PredecessorsAndSuccessors') && d.data.record.get('PredecessorsAndSuccessors').Count > 0) lClass = "gotDependencies";
                 if (d.data.record.data.ObjectID){
                     if (!d.data.record.get('State')) return "error--node";      //Not been set - which is an error in itself
-                    lClass +=  ' q' + gApp._getColourFromModel(d.data.record) + '-' + gApp.numStates[gApp._getOrdFromModel(d.data.record.get('_type'))];
+                    lClass += ' q' + gApp._getDotColor(d); 
+                    //lClass +=  ' q' + gApp._getColourFromModel(d.data.record) + '-' + gApp.numStates[gApp._getOrdFromModel(d.data.record.get('_type'))];
                     //lClass +=  ' q' + ((d.data.record.get('State').index) + '-' + gApp.numStates[gApp._getOrdFromModel(d.data.record.get('_type'))]);
-                                lClass += gApp._dataCheckForItem(d);
+                    //lClass += gApp._dataCheckForItem(d);
                 } else {
                     return d.data.error ? "error--node": "no--errors--done";
                 }
@@ -278,10 +278,13 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             return lClass;
         },
         _getNodeText: function(d){
-            var titleText = d.children?d.data.Name : d.data.Name + ' ' + (d.data.record && d.data.record.data.Name); 
+            var titleText = d.children ? d.data.Name : d.data.Name + ' ' + (d.data.record && d.data.record.data.Name); 
+            console.log('titleText',titleText);
             if ((d.data.record.data._ref !== 'root') && gApp.getSetting('showExtraText')) {
-                var prelimName = d.data.record.get('PreliminaryEstimate') ? d.data.record.get('PreliminaryEstimate').Name : 'Unsized!';
-                titleText += ' (' + d.data.record.get('Project').Name + ' : ' + prelimName + ')';
+                var prelimName = d.data.record.get('PreliminaryEstimate') && d.data.record.get('PreliminaryEstimate').Name || "";
+                if (prelimName){
+                    titleText += ' (' + prelimName + ')' ;
+                }
             }
             return titleText; 
         },
@@ -430,7 +433,8 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
                     cardFieldDisplayList: gApp.CARD_DISPLAY_FIELD_LIST,
                     portfolioItemTypes: this.portfolioItemTypes,
                     height: this.getHeight() * .90,
-                    width: this.getWidth() * .75
+                    width: this.getWidth() * .75,
+                    context: this.getContext()
                 });
             }
             
@@ -648,6 +652,7 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             console.log('selector',piTypeSelector.getRecord());
             var model = piTypeSelector.getRecord().get('TypePath');
             var hdrBox = gApp.down('#headerBox');
+            var portfolioFilters = Rally.data.wsapi.Filter.fromQueryString("((LeafStoryCount > 0) AND (State.Name != \"Done\"))");
             //gApp._typeStore = ptype.store;
             var selector = gApp.down('#itemSelector');
             if ( selector) {
@@ -671,15 +676,7 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
                     fetch: gApp.STORE_FETCH_FIELD_LIST,
                     context: gApp.getContext().getDataContext(),
                     pageSize: 200,
-                    filters: [{
-                        property: "DirectChildrenCount",
-                        operator: ">",
-                        value: 0
-                    },{
-                        property: "State",
-                        operator: "!=",
-                        value: "Done"
-                    }],
+                    filters: portfolioFilters,
                     autoLoad: true
                 },
                 listeners: {
@@ -1038,16 +1035,16 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             return model && model.get('TypePath');
         },
     
-        _getOrdFromModel: function(modelName){
-            var model = null;
-            console.log(this.portfolioItemTypes)
-            _.each(this.portfolioItemTypes, function(type) {
-                if (modelName == type.get('TypePath').toLowerCase()) {
-                    model = type.get('Ordinal');
-                }
-            });
-            return model;
-        },
+        // _getOrdFromModel: function(modelName){
+        //     var model = null;
+        //     console.log(this.portfolioItemTypes)
+        //     _.each(this.portfolioItemTypes, function(type) {
+        //         if (modelName == type.get('TypePath').toLowerCase()) {
+        //             model = type.get('Ordinal');
+        //         }
+        //     });
+        //     return model;
+        // },
     
         _createTree: function (records) {
             //Try to use d3.stratify to create nodet
@@ -1219,26 +1216,26 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             {
                 name: 'showExtraText',
                 xtype: 'rallycheckboxfield',
-                fieldLabel: 'Add Project and Prelim Size to titles',
+                fieldLabel: 'Add Preliminary Estimate Size to titles',
                 labelAlign: 'top'
             },
-            {
-                name: 'allowMultiSelect',
-                xtype: 'rallycheckboxfield',
-                fieldLabel: 'Enable multiple start items (Note: Page Reload required if you change value)',
-                labelAlign: 'top'
-            },
+            // {
+            //     name: 'allowMultiSelect',
+            //     xtype: 'rallycheckboxfield',
+            //     fieldLabel: 'Enable multiple start items (Note: Page Reload required if you change value)',
+            //     labelAlign: 'top'
+            // },
             {
                 xtype: 'rallycheckboxfield',
                 fieldLabel: 'Show Advanced filter',
                 name: 'showFilter',
                 labelAlign: 'top'
-            },
-            {
-                xtype: 'rallycheckboxfield',
-                fieldLabel: 'Use DisplayColor',
-                name: 'useColour',
-                labelAlign: 'top'
+            // },
+            // {
+            //     xtype: 'rallycheckboxfield',
+            //     fieldLabel: 'Use DisplayColor',
+            //     name: 'useColour',
+            //     labelAlign: 'top'
             },{
                 xtype: 'rallycombobox',
                 fieldLabel: 'Dot Color',

@@ -122,7 +122,8 @@ Ext.define("Rally.app.portfolioitem.DetailWindow",{
         this.down('#rightCol').add({
             xtype: 'portfolioview',
             renderData: this.record.getData(),
-            notesField: this.notesFieldName
+            notesField: this.notesFieldName,
+            context: this.context 
         });
       
         if (childRecords && childRecords.length > 0){
