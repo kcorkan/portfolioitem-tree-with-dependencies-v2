@@ -15,7 +15,7 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
             '<tr><td class="timeline-label">Actual End Date:</td>***REMOVED***[this.getActualEndDate(values)]***REMOVED***</tr>',
             '</table><br/><br/>',
             '<div>***REMOVED***[this.createRiskLink(values)]***REMOVED***</div><br/>',
-            '<div class="timeline-label" style="text-align:left;">Portfolio Notes:</div>',
+            '<div class="timeline-label" style="text-align:left;">Notes:</div>',
             '***REMOVED***[this.getNotes(values)]***REMOVED***',
         '</tpl>',
         ***REMOVED***
@@ -24,8 +24,8 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
             ***REMOVED***,
 
             getPlannedStartDate: function (values) ***REMOVED***
-                console.log('getplannedstartdate')
-                var val = values.PlannedStartDate || "Not populated";
+                console.log('getplannedstartdate',this.context)
+                var val = values.PlannedStartDate && Rally.util.DateTime.formatWithDefault(values.PlannedstartDate, this.context) || "Not populated";
                 var cls = "timeline-gray";
                 if (val === "Not populated")***REMOVED***
                     cls = "timeline-red";
@@ -36,7 +36,7 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
             ***REMOVED***,
             getPlannedEndDate: function (values) ***REMOVED***
                 
-                var val = values.PlannedEndDate || "Not populated";
+                var val = values.PlannedEndDate && Rally.util.DateTime.formatWithDefault(values.PlannedEndDate, this.context) || "Not populated";
                 var cls = "timeline-gray";
                 if (val === "Not populated")***REMOVED***
                     cls = "timeline-red";
@@ -45,7 +45,7 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
             ***REMOVED***,
             getActualEndDate: function (values) ***REMOVED***
                 
-                var val = values.ActualEndDate;
+                var val = values.ActualEndDate && Rally.util.DateTime.formatWithDefault(values.ActualEndDate, this.context) || null;
                 var cls = "timeline-green";
                 if (!val)***REMOVED***
                     if (values.ActualStartDate)***REMOVED***
@@ -64,7 +64,7 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
             ***REMOVED***, 
             getActualStartDate: function (values) ***REMOVED***
                 
-                var val = values.ActualStartDate;
+                var val = values.ActualStartDate && Rally.util.DateTime.formatWithDefault(values.ActualStartDate, this.context) || null;
                 var cls = "timeline-blue";
                 if (!val)***REMOVED***
                     if (values.DirectChildrenCount > 0)***REMOVED***
@@ -110,16 +110,19 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
          * The data store record that this card represents
          */
         record: undefined,
-        notesField: undefined
+        notesField: undefined,
+        context: null
     ***REMOVED***,
     
     constructor: function (config) ***REMOVED***
         config = config || ***REMOVED******REMOVED***;
-        
+        console.log('config',config)
         //console.log(Ext.getClass(config.record).superclass.self.getName());
         if ( config && config.record && !Ext.isEmpty( Ext.getClass(config.record) )) ***REMOVED***
             config.record = config.record.getData();
         ***REMOVED***
+        this.context = config.context;
+        this.renderTpl.context = config.context;
         this.mergeConfig(config);
         this.callParent([this.config]);
     ***REMOVED***    

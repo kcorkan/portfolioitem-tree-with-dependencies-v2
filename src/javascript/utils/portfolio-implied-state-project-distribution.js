@@ -11,7 +11,7 @@ Ext.define("Rally.app.widget.portfolioImpliedStateProjectDistribution",***REMOVE
             marginTop: 100
         ***REMOVED***,
         title: ***REMOVED***
-            text: 'Features by Team and Implied State',
+            text: 'Assigned Features & Teams',
             style: ***REMOVED***
                 color: '#444',
                 fontFamily:'ProximaNova',

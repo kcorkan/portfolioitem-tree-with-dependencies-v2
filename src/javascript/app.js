@@ -15,7 +15,6 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
             hideArchived: true,
             showFilter: true,
             allowMultiSelect: false,
-            useColour: false,
             colorOption: 'Implied State'
         ***REMOVED***
     ***REMOVED***,
@@ -176,25 +175,25 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
             gApp._refreshTree();
         ***REMOVED***,
     
-        _getColourFromModel: function(record)
-        ***REMOVED***
-            var theStore = null;
+        // _getColourFromModel: function(record)
+        // ***REMOVED***
+        //     var theStore = null;
     
-             //We can find the original type that the state Store is from by looking into the value of the filters
-            _.each(gApp.stateStores, function(store) ***REMOVED***
-                if (store.modelType.type == record.get('_type'))***REMOVED***
-                    theStore = store;
-                ***REMOVED***
-            ***REMOVED***);
-            if (theStore) ***REMOVED***
-                return theStore.findBy( function(theState) ***REMOVED***    //Get the index of the store from the State Name
-                    return theState.get('Name') == record.get('State').Name;
-                ***REMOVED***);
-            ***REMOVED***
-            else ***REMOVED***
-                return 0;
-            ***REMOVED***
-        ***REMOVED***,
+        //      //We can find the original type that the state Store is from by looking into the value of the filters
+        //     _.each(gApp.stateStores, function(store) ***REMOVED***
+        //         if (store.modelType.type == record.get('_type'))***REMOVED***
+        //             theStore = store;
+        //         ***REMOVED***
+        //     ***REMOVED***);
+        //     if (theStore) ***REMOVED***
+        //         return theStore.findBy( function(theState) ***REMOVED***    //Get the index of the store from the State Name
+        //             return theState.get('Name') == record.get('State').Name;
+        //         ***REMOVED***);
+        //     ***REMOVED***
+        //     else ***REMOVED***
+        //         return 0;
+        //     ***REMOVED***
+        // ***REMOVED***,
         getPercentDoneName: function()***REMOVED***
             //TODO depends on setting 
             return "PercentDoneByStoryPlanEstimate";
@@ -230,9 +229,10 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
                 if (d.data.record.get('PredecessorsAndSuccessors') && d.data.record.get('PredecessorsAndSuccessors').Count > 0) lClass = "gotDependencies";
                 if (d.data.record.data.ObjectID)***REMOVED***
                     if (!d.data.record.get('State')) return "error--node";      //Not been set - which is an error in itself
-                    lClass +=  ' q' + gApp._getColourFromModel(d.data.record) + '-' + gApp.numStates[gApp._getOrdFromModel(d.data.record.get('_type'))];
+                    lClass += ' q' + gApp._getDotColor(d); 
+                    //lClass +=  ' q' + gApp._getColourFromModel(d.data.record) + '-' + gApp.numStates[gApp._getOrdFromModel(d.data.record.get('_type'))];
                     //lClass +=  ' q' + ((d.data.record.get('State').index) + '-' + gApp.numStates[gApp._getOrdFromModel(d.data.record.get('_type'))]);
-                                lClass += gApp._dataCheckForItem(d);
+                    //lClass += gApp._dataCheckForItem(d);
                 ***REMOVED*** else ***REMOVED***
                     return d.data.error ? "error--node": "no--errors--done";
                 ***REMOVED***
@@ -278,10 +278,13 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
             return lClass;
         ***REMOVED***,
         _getNodeText: function(d)***REMOVED***
-            var titleText = d.children?d.data.Name : d.data.Name + ' ' + (d.data.record && d.data.record.data.Name); 
+            var titleText = d.children ? d.data.Name : d.data.Name + ' ' + (d.data.record && d.data.record.data.Name); 
+            console.log('titleText',titleText);
             if ((d.data.record.data._ref !== 'root') && gApp.getSetting('showExtraText')) ***REMOVED***
-                var prelimName = d.data.record.get('PreliminaryEstimate') ? d.data.record.get('PreliminaryEstimate').Name : 'Unsized!';
-                titleText += ' (' + d.data.record.get('Project').Name + ' : ' + prelimName + ')';
+                var prelimName = d.data.record.get('PreliminaryEstimate') && d.data.record.get('PreliminaryEstimate').Name || "";
+                if (prelimName)***REMOVED***
+                    titleText += ' (' + prelimName + ')' ;
+                ***REMOVED***
             ***REMOVED***
             return titleText; 
         ***REMOVED***,
@@ -430,7 +433,8 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
                     cardFieldDisplayList: gApp.CARD_DISPLAY_FIELD_LIST,
                     portfolioItemTypes: this.portfolioItemTypes,
                     height: this.getHeight() * .90,
-                    width: this.getWidth() * .75
+                    width: this.getWidth() * .75,
+                    context: this.getContext()
                 ***REMOVED***);
             ***REMOVED***
             
@@ -648,6 +652,7 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
             console.log('selector',piTypeSelector.getRecord());
             var model = piTypeSelector.getRecord().get('TypePath');
             var hdrBox = gApp.down('#headerBox');
+            var portfolioFilters = Rally.data.wsapi.Filter.fromQueryString("((LeafStoryCount > 0) AND (State.Name != \"Done\"))");
             //gApp._typeStore = ptype.store;
             var selector = gApp.down('#itemSelector');
             if ( selector) ***REMOVED***
@@ -671,15 +676,7 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
                     fetch: gApp.STORE_FETCH_FIELD_LIST,
                     context: gApp.getContext().getDataContext(),
                     pageSize: 200,
-                    filters: [***REMOVED***
-                        property: "DirectChildrenCount",
-                        operator: ">",
-                        value: 0
-                    ***REMOVED***,***REMOVED***
-                        property: "State",
-                        operator: "!=",
-                        value: "Done"
-                    ***REMOVED***],
+                    filters: portfolioFilters,
                     autoLoad: true
                 ***REMOVED***,
                 listeners: ***REMOVED***
@@ -1038,16 +1035,16 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
             return model && model.get('TypePath');
         ***REMOVED***,
     
-        _getOrdFromModel: function(modelName)***REMOVED***
-            var model = null;
-            console.log(this.portfolioItemTypes)
-            _.each(this.portfolioItemTypes, function(type) ***REMOVED***
-                if (modelName == type.get('TypePath').toLowerCase()) ***REMOVED***
-                    model = type.get('Ordinal');
-                ***REMOVED***
-            ***REMOVED***);
-            return model;
-        ***REMOVED***,
+        // _getOrdFromModel: function(modelName)***REMOVED***
+        //     var model = null;
+        //     console.log(this.portfolioItemTypes)
+        //     _.each(this.portfolioItemTypes, function(type) ***REMOVED***
+        //         if (modelName == type.get('TypePath').toLowerCase()) ***REMOVED***
+        //             model = type.get('Ordinal');
+        //         ***REMOVED***
+        //     ***REMOVED***);
+        //     return model;
+        // ***REMOVED***,
     
         _createTree: function (records) ***REMOVED***
             //Try to use d3.stratify to create nodet
@@ -1219,26 +1216,26 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
             ***REMOVED***
                 name: 'showExtraText',
                 xtype: 'rallycheckboxfield',
-                fieldLabel: 'Add Project and Prelim Size to titles',
+                fieldLabel: 'Add Preliminary Estimate Size to titles',
                 labelAlign: 'top'
             ***REMOVED***,
-            ***REMOVED***
-                name: 'allowMultiSelect',
-                xtype: 'rallycheckboxfield',
-                fieldLabel: 'Enable multiple start items (Note: Page Reload required if you change value)',
-                labelAlign: 'top'
-            ***REMOVED***,
+            // ***REMOVED***
+            //     name: 'allowMultiSelect',
+            //     xtype: 'rallycheckboxfield',
+            //     fieldLabel: 'Enable multiple start items (Note: Page Reload required if you change value)',
+            //     labelAlign: 'top'
+            // ***REMOVED***,
             ***REMOVED***
                 xtype: 'rallycheckboxfield',
                 fieldLabel: 'Show Advanced filter',
                 name: 'showFilter',
                 labelAlign: 'top'
-            ***REMOVED***,
-            ***REMOVED***
-                xtype: 'rallycheckboxfield',
-                fieldLabel: 'Use DisplayColor',
-                name: 'useColour',
-                labelAlign: 'top'
+            // ***REMOVED***,
+            // ***REMOVED***
+            //     xtype: 'rallycheckboxfield',
+            //     fieldLabel: 'Use DisplayColor',
+            //     name: 'useColour',
+            //     labelAlign: 'top'
             ***REMOVED***,***REMOVED***
                 xtype: 'rallycombobox',
                 fieldLabel: 'Dot Color',
