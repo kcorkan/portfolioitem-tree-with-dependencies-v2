@@ -66,7 +66,8 @@ Ext.define("Rally.app.widget.portfolioImpliedStateProjectDistribution",{
                         fill:'#444'
                     }
                 },
-                min: 0
+                min: 0,
+                minTickInterval: 1
             },
         legend: {
             itemStyle: {
