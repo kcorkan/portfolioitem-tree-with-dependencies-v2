@@ -714,37 +714,38 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
             var deferred = Ext.create('Deft.Deferred');
             if (!records || records.length === 0)***REMOVED***
                 deferred.resolve([]);
-            ***REMOVED***
-            var rootRecord = records[0];  
-              
-            var rootRecordLevel = this._getSelectedOrdinal(); 
-            var promises = [];
-            var parentProperty = "ObjectID",
-                parentPropertyValue = rootRecord.get("ObjectID");
-            for (var i=rootRecordLevel; i>0; i--)***REMOVED***
-                parentProperty = "Parent." + parentProperty;
-                var childConfig = this.getChildStoreConfig(i-1,parentProperty, parentPropertyValue);
-                promises.push(this.loadWsapiRecords(childConfig));
-            ***REMOVED***
-            if (promises.length > 0)***REMOVED***
-                Deft.Promise.all(promises).then(***REMOVED***
-                    success: function(results)***REMOVED***
-                        console.log('results',results)
-                        var records = _.reduce(results, function(arr,result)***REMOVED*** 
-                            arr = arr.concat(result); 
-                            return arr;
-                        ***REMOVED***,[rootRecord]);
-                        console.log('records',records);
-                        deferred.resolve(records);
-                    ***REMOVED***,
-                    failure: function(msg)***REMOVED***
-                        deferred.reject(msg); 
-                    ***REMOVED***,
-                    scope: this 
-                ***REMOVED***);
             ***REMOVED*** else ***REMOVED***
-                deferred.resolve([]);
+                var rootRecord = records[0];  
+                var rootRecordLevel = this._getSelectedOrdinal(); 
+                var promises = [];
+                var parentProperty = "ObjectID",
+                    parentPropertyValue = rootRecord.get("ObjectID");
+                for (var i=rootRecordLevel; i>0; i--)***REMOVED***
+                    parentProperty = "Parent." + parentProperty;
+                    var childConfig = this.getChildStoreConfig(i-1,parentProperty, parentPropertyValue);
+                    promises.push(this.loadWsapiRecords(childConfig));
+                ***REMOVED***
+                if (promises.length > 0)***REMOVED***
+                    Deft.Promise.all(promises).then(***REMOVED***
+                        success: function(results)***REMOVED***
+                            console.log('results',results)
+                            var records = _.reduce(results, function(arr,result)***REMOVED*** 
+                                arr = arr.concat(result); 
+                                return arr;
+                            ***REMOVED***,[rootRecord]);
+                            console.log('records',records);
+                            deferred.resolve(records);
+                        ***REMOVED***,
+                        failure: function(msg)***REMOVED***
+                            deferred.reject(msg); 
+                        ***REMOVED***,
+                        scope: this 
+                    ***REMOVED***);
+                ***REMOVED*** else ***REMOVED***
+                    deferred.resolve([]);
+                ***REMOVED***
             ***REMOVED***
+            
             return deferred.promise; 
         ***REMOVED***,
         loadWsapiRecords: function(config)***REMOVED***
