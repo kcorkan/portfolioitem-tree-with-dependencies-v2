@@ -114,7 +114,14 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
                 d3.select("#tree").remove();
                 gApp._nodeTree = null;
             ***REMOVED***
-            this.down('#treeContainer').removeAll(); 
+            if (this.down('#treeContainer'))***REMOVED***
+                this.down('#treeContainer').destroy();
+            ***REMOVED***
+
+            this.add(***REMOVED***
+                xtype: 'container',
+                itemId: 'treeContainer'
+            ***REMOVED***);
             
             this.down('#treeContainer').add(***REMOVED***
                 xtype: 'portfolioitemtree',
@@ -1064,10 +1071,10 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
             //         cls: 'xxfilterbox'
             //     ***REMOVED***);
 
-            this.add(***REMOVED***
-                xtype: 'container',
-                itemId: 'treeContainer'
-            ***REMOVED***);
+            // this.add(***REMOVED***
+            //     xtype: 'container',
+            //     itemId: 'treeContainer'
+            // ***REMOVED***);
                 // this.add(***REMOVED***
                 //     xtype: 'portfolioitemtree',
                 //     itemId: 'rootSurface',
