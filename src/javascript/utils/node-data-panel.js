@@ -33,7 +33,7 @@ Ext.define("Rally.app.portfolioitem.DetailWindow",{
     model: null,
     childField: null,
     width: 1200, 
-    height: 600,
+    height: 800,
     cardFieldDisplayList: null,
     notesFieldName: "Notes",
     portfolioItemTypes: [],
@@ -109,6 +109,16 @@ Ext.define("Rally.app.portfolioitem.DetailWindow",{
         return commonFields; 
    
     },
+    _getFeatureCollectionCount: function(childRecords,collectionName){
+        var collectionCount = 0; 
+
+        _.each(childRecords, function(r){
+            var cnt = r.get(collectionName) && r.get(collectionName).Count || 0; 
+
+            collectionCount += cnt;
+        });
+        return collectionCount;
+    },
     updateDisplay: function(rootRecord,childRecords){
         console.log('updateDisplay',rootRecord, childRecords);
         this.down('#leftCol').add({
@@ -123,7 +133,9 @@ Ext.define("Rally.app.portfolioitem.DetailWindow",{
             xtype: 'portfolioview',
             renderData: this.record.getData(),
             notesField: this.notesFieldName,
-            context: this.context 
+            context: this.context,
+            featurePredecessors: this._getFeatureCollectionCount(childRecords,'Predecessors'),
+            featureSuccessors: this._getFeatureCollectionCount(childRecords,'Successors')
         });
       
         if (childRecords && childRecords.length > 0){

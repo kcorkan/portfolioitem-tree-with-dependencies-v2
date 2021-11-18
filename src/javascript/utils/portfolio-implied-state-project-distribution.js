@@ -11,7 +11,7 @@ Ext.define("Rally.app.widget.portfolioImpliedStateProjectDistribution",{
             marginTop: 100
         },
         title: {
-            text: 'Assigned Features & Teams',
+            text: 'Assigned Features & Squads',
             style: {
                 color: '#444',
                 fontFamily:'ProximaNova',
@@ -37,6 +37,7 @@ Ext.define("Rally.app.widget.portfolioImpliedStateProjectDistribution",{
             title: {
                 text: ''
             },
+            minTickInterval: 1,
             labels: {
                 style: {
                     color: '#444',

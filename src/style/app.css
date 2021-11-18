@@ -240,8 +240,60 @@
 }
 .no-risk {
   font-family: ProximaNova;
-  font-size:18px;
+  font-size:16px;
   color: #009933;
   font-weight: bolder;
   padding: 10;
+}
+
+.feature-dependency {
+  font-family: ProximaNova;
+  font-size:14px;
+  color: #004299;
+  font-weight: bold;
+  padding: 10;
+}
+.legend-title {
+  font-family: ProximaNova;
+  font-size:14px;
+  padding: 3px;
+}
+.legend {
+  font-family: ProximaNova;
+  font-size:12px;
+  padding: 3px;
+}
+.legend-dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.not-defined {
+  background-color: #CCCCCC;
+}
+.not-started {
+  background-color: #999999;
+}
+.in-progress {
+  background-color: #00a9e0;
+}
+.done {
+  background-color: #009933;
+} 
+.health-red{
+  background-color: #F66349;
+}
+.health-green {
+  background-color: #8DC63F;
+}
+.health-yellow{
+  background-color: #FAD200;
+}
+.health-white{
+  background-color: #E0E0E0;
+}
+.health-gray{
+  background-color: #D1D1D1;
 }

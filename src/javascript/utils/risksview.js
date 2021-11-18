@@ -13,8 +13,9 @@ Ext.define('Rally.app.PortfolioItemView',{
             '<tr><td class="timeline-label">Actual Start Date:</td>{[this.getActualStartDate(values)]}</tr>',
             '<tr><td class="timeline-label">Planned End Date:</td>{[this.getPlannedEndDate(values)]}</tr>',
             '<tr><td class="timeline-label">Actual End Date:</td>{[this.getActualEndDate(values)]}</tr>',
-            '</table><br/><br/>',
+            '</table><br/><br/><br/>',
             '<div>{[this.createRiskLink(values)]}</div><br/>',
+            '<div>{[this.createItemDependencyLink(values)]}</div><br/><br/>',
             '<div class="timeline-label" style="text-align:left;">Notes:</div>',
             '{[this.getNotes(values)]}',
         '</tpl>',
@@ -22,7 +23,6 @@ Ext.define('Rally.app.PortfolioItemView',{
             getDimensionStyle: function(){
                 return 'width: ' + this.width + '; height: ' + this.height + '; line-height: ' + this.height + ';display: inline-block';
             },
-
             getPlannedStartDate: function (values) {
                 console.log('getplannedstartdate',this.context)
                 var val = values.PlannedStartDate && Rally.util.DateTime.formatWithDefault(values.PlannedstartDate, this.context) || "Not populated";
@@ -89,7 +89,22 @@ Ext.define('Rally.app.PortfolioItemView',{
                 var html = this.createRiskIcon(data.Risks.Count) + Ext.String.format('<a href="/#/detail{0}/risks" target="_blank" class="{2}"><b>{1} Risks</b></a> are associated with this item.',ref,riskCount,cls);
                 return  html; 
             },
-        
+            createItemDependencyLink: function(data){
+                
+                var dependencyCount = data.Predecessors && data.Predecessors.Count || 0;
+                var ref = Rally.util.Ref.getRelativeUri(data);  
+                var cls = dependencyCount > 0 ? "risk" : "no-risk";  
+                var html = Ext.String.format('<span class="{2} artifact-icon icon-predecessor"></span><a href="/#/detail{0}/dependencies" target="_blank" class="{2}"><b>{1} predecessor(s)</b></a>',ref,dependencyCount,cls);
+                
+                var sCnt = data.Successors && data.Successors.Count || 0;
+                var cls = sCnt > 0 ? "risk" : "no-risk";  
+                html += Ext.String.format('<br/><br/><span class="{2} artifact-icon icon-successor"></span><a href="/#/detail{0}/dependencies" target="_blank" class="{2}"><b>{1} successors(s)</b></a>',ref,sCnt,cls);;
+
+                //html += Ext.String.format('&nbsp;&nbsp;&nbsp;&nbsp;and <a href="/#/detail{0}/children" target="_blank" class="feature-dependency"><b>{1} Feature predecessor(s)</b></a>.',ref,this.featurePredecessors);
+                //html += Ext.String.format('<span class="feature-dependency artifact-icon icon-successor"></span><a href="/#/detail{0}/children" target="_blank" class="feature-dependency"><b>{1} Feature successor(s)</b></a>.',ref,this.featureSuccessors);
+                return  html; 
+
+            },
             createRiskIcon: function (riskCount) {
                 var className = 'icon-warning risk';
                 if (riskCount === 0){
@@ -111,7 +126,9 @@ Ext.define('Rally.app.PortfolioItemView',{
          */
         record: undefined,
         notesField: undefined,
-        context: null
+        context: null,
+        featurePredecessors: null,
+        featureSuccessors: null 
     },
     
     constructor: function (config) {
@@ -121,8 +138,10 @@ Ext.define('Rally.app.PortfolioItemView',{
         if ( config && config.record && !Ext.isEmpty( Ext.getClass(config.record) )) {
             config.record = config.record.getData();
         }
-        this.context = config.context;
+        //this.context = config.context;
         this.renderTpl.context = config.context;
+        this.renderTpl.featurePredecessors = config.featurePredecessors;
+        this.renderTpl.featureSuccessors = config.featureSuccessors;
         this.mergeConfig(config);
         this.callParent([this.config]);
     }    

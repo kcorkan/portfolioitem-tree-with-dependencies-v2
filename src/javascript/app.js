@@ -196,7 +196,10 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
         // },
         getPercentDoneName: function(){
             //TODO depends on setting 
-            return "PercentDoneByStoryPlanEstimate";
+            if (this.getSetting('colorOption') === "Health Color by Estimate"){
+                return "PercentDoneByStoryPlanEstimate";
+            }
+            return "PercentDoneByStoryCount";
         },
         _getDotColor: function(d){
             var colorSetting = gApp.getSetting('colorOption') || 'Implied State';
@@ -205,7 +208,7 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
                 return d.data.record.get('DisplayColor');
             }
            
-            if (colorSetting === 'Health Color'){
+            if (colorSetting === 'Health Color by Count' || colorSetting === 'Health Color by Estimate'){
                 var colorObject = Rally.util.HealthColorCalculator.calculateHealthColorForPortfolioItemData(d.data.record.getData(), this.percentDoneName);
                 return colorObject.hex;
             }
@@ -222,6 +225,7 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             }
             return colorObject;
         },
+        
         _getCircleClass: function(d){
             var lClass = "dotOutline"; // Might want to use outline to indicate something later
 
@@ -658,6 +662,9 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             if ( selector) {
                 selector.destroy();
             }
+            this.down('#legendSpacer') && this.down('#legendSpacer').destroy();            
+            this.down('#legend') && this.down('#legend').destroy();            
+
             var is = hdrBox.insert(2,{
                 xtype: 'rallyartifactsearchcombobox',
                 fieldLabel: 'Choose Start Item :',
@@ -685,111 +692,21 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
                 }
             });   
     
-    //        Ext.util.Observable.capture( is, function(event) { console.log('event', event, arguments);});
-    //         if(gApp.getSetting('showFilter') && !gApp.down('#inlineFilter')){
-    //             hdrBox.add({
-    //                 xtype: 'rallyinlinefiltercontrol',
-    //                 name: 'inlineFilter',
-    //                 itemId: 'inlineFilter',
-    //                 margin: '10 0 5 20',                           
-    //                 context: this.getContext(),
-    //                 height:26,
-    //                 inlineFilterButtonConfig: {
-    //                     stateful: true,
-    //                     stateId: this.getContext().getScopedStateId('inline-filter'),
-    //                     context: this.getContext(),
-    // //                    modelNames: ['PortfolioItem/' + ptype.rawValue], //NOOOO!
-    //                     modelNames: gApp._getModelFromOrd(0), //We actually want to filter the features... YESSSS!
-    //                     filterChildren: false,
-    //                     inlineFilterPanelConfig: {
-    //                         quickFilterPanelConfig: {
-    //                             defaultFields: ['ArtifactSearch', 'Owner']
-    //                         }
-    //                     },
-    //                     listeners: {
-    //                         inlinefilterchange: this._onFilterChange,
-    //                         inlinefilterready: this._onFilterReady,
-    //                         scope: this
-    //                     } 
-    //                 }
-    //             });
-    //         }
-    
-            // if (!gApp.getSetting('useColour')) {
-            //     var buttonTxt = "Colour Codes";
-            //     if (!gApp.down('#colourButton')){
-            //         hdrBox.add({
-            //             xtype: 'rallybutton',
-            //             itemId: 'colourButton',
-            //             margin: '10 0 5 20',
-            //             ticked: false,
-            //             text: buttonTxt,
-            //             handler: function() {
-            //                 if (this.ticked === false) {
-            //                     this.setText('Return');
-            //                     this.ticked = true;
-            //                     d3.select("#colourLegend").attr("visibility","visible");
-            //                     d3.select("#tree").attr("visibility", "hidden");
-            //                 } else {
-            //                     this.setText(buttonTxt);
-            //                     this.ticked = false;
-            //                     d3.select("#colourLegend").attr("visibility","hidden");
-            //                     d3.select("#tree").attr("visibility", "visible");
-            //                 }
-            //             }
-            //         });
-            //     }
-            // }
-    
-            // if (!gApp.down('#infoButton')){
-            //         hdrBox.add( {
-            //         xtype: 'rallybutton',
-            //         itemId: 'infoButton',
-            //         margin: '10 0 5 20',
-            //         align: 'right',
-            //         text: 'Page Info',
-            //         handler: function() {
-            //             Ext.create('Rally.ui.dialog.Dialog', {
-            //                 autoShow: true,
-            //                 draggable: true,
-            //                 closable: true,
-            //                 width: 500,
-            //                 autoScroll: true,
-            //                 maxHeight: 600,
-            //                 title: 'Information about this app',
-            //                 items: {
-            //                     xtype: 'component',
-            //                     html: 
-            //                         '<p class="boldText">Hierarchical Tree View</p>' +
-            //                         '<p>This app will find all the children of a particular Portfolio artefact. You can choose the type of artefact,' +
-            //                         ' then the top level artefact itself.</p>' +
-            //                         '<p>The colours of the circles indicate the state of progress from red (those that are not started), through to' +
-            //                         ' blue (in their final stages). Click on the "Colour Codes" button to see the colour to state mapping for each' +
-            //                         ' portfolio item type.</p>' +
-            //                         '<p class="boldText">Choosing collections</p>' +
-            //                         '<p>The app settings contains an option to allow you to multi-select the top level artefacts. This allows you to' +
-            //                         ' choose a number of portfolio items of interest and then filter for the features</p>' +
-            //                         '<p class="boldText">Visualising Dependencies</p>' +
-            //                         '<p>The edge of the circle will be red if there are any dependencies (predecessors or successors) and the colour ' +
-            //                         'of the associated text will indicate those with predecessors (red text) and those with successors (green text). ' +
-            //                         'Those with both will appear as having predecessors</p>' +
-            //                         '<p>If the text is blinking, it means that the relevant dependency is not being shown in this data set. </p>' +
-            //                         '<p class="boldText">Exploring the data</p><p>You can investigate dependencies by using &lt;shift&gt;-Click ' +
-            //                         'on the circle. This will call up an overlay with the relevant dependencies. Clicking on the FormattedID on any' +
-            //                         ' artefact in the overlay will take you to it in either the EDP or QDP page (whichever you have enabled for your' +
-            //                         ' session )</p>' +
-            //                         '<p>If you click on the circle without using shift, then a data panel will appear containing more information about that artefact</p>' +
-            //                         '<p class="boldText">Filtering</p>' +
-            //                         '<p>There are app settings to enable the extra filtering capabilities on the main page, so that you can choose which lowest-level portfolio items to see' +
-            //                         ' e.g. filter on Owner, Investment Type, etc. </p><p>To filter by release (e.g. to find all those features scheduled into a Program Increment)' +
-            //                         ' you will need to edit the Page settings (not the App Settings) to add a Release or Milestone filter</p>' +
-            //                         '<p>Source code available here: <br/><a href=https://github.com/nikantonelli/PortfolioItem-Tree-With-Dependencies> Github Repo</a></p>',
-            //                     padding: 10
-            //                 }
-            //             });
-            //         }
-            //     } );
-            // }
+
+            hdrBox.add({
+                xtype: 'container',
+                itemId: 'legendSpacer',
+                flex: 1});
+                
+            var colorOption = this.getSetting('colorOption');
+            hdrBox.add({ 
+                xtype: 'legend',
+                itemId: 'legend',
+                title: colorOption
+            });
+            
+            
+            
         },
     
         loadArtifacts: function(records){
@@ -1138,6 +1055,7 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
                 ]               
             });
 
+           
             // hdrBox.add(
             //     {  
             //         xtype: 'container',
@@ -1241,7 +1159,7 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
                 fieldLabel: 'Dot Color',
                 labelAlign: 'right',
                 name: 'colorOption',
-                store: ['Implied State','Display Color','Health Color']
+                store: ['Implied State','Display Color','Health Color by Count','Health Color by Estimate']
             }
             ];
             return returned;
