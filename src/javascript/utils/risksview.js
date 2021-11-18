@@ -13,8 +13,9 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
             '<tr><td class="timeline-label">Actual Start Date:</td>***REMOVED***[this.getActualStartDate(values)]***REMOVED***</tr>',
             '<tr><td class="timeline-label">Planned End Date:</td>***REMOVED***[this.getPlannedEndDate(values)]***REMOVED***</tr>',
             '<tr><td class="timeline-label">Actual End Date:</td>***REMOVED***[this.getActualEndDate(values)]***REMOVED***</tr>',
-            '</table><br/><br/>',
+            '</table><br/><br/><br/>',
             '<div>***REMOVED***[this.createRiskLink(values)]***REMOVED***</div><br/>',
+            '<div>***REMOVED***[this.createItemDependencyLink(values)]***REMOVED***</div><br/><br/>',
             '<div class="timeline-label" style="text-align:left;">Notes:</div>',
             '***REMOVED***[this.getNotes(values)]***REMOVED***',
         '</tpl>',
@@ -22,7 +23,6 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
             getDimensionStyle: function()***REMOVED***
                 return 'width: ' + this.width + '; height: ' + this.height + '; line-height: ' + this.height + ';display: inline-block';
             ***REMOVED***,
-
             getPlannedStartDate: function (values) ***REMOVED***
                 console.log('getplannedstartdate',this.context)
                 var val = values.PlannedStartDate && Rally.util.DateTime.formatWithDefault(values.PlannedstartDate, this.context) || "Not populated";
@@ -89,7 +89,22 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
                 var html = this.createRiskIcon(data.Risks.Count) + Ext.String.format('<a href="/#/detail***REMOVED***0***REMOVED***/risks" target="_blank" class="***REMOVED***2***REMOVED***"><b>***REMOVED***1***REMOVED*** Risks</b></a> are associated with this item.',ref,riskCount,cls);
                 return  html; 
             ***REMOVED***,
-        
+            createItemDependencyLink: function(data)***REMOVED***
+                
+                var dependencyCount = data.Predecessors && data.Predecessors.Count || 0;
+                var ref = Rally.util.Ref.getRelativeUri(data);  
+                var cls = dependencyCount > 0 ? "risk" : "no-risk";  
+                var html = Ext.String.format('<span class="***REMOVED***2***REMOVED*** artifact-icon icon-predecessor"></span><a href="/#/detail***REMOVED***0***REMOVED***/dependencies" target="_blank" class="***REMOVED***2***REMOVED***"><b>***REMOVED***1***REMOVED*** predecessor(s)</b></a>',ref,dependencyCount,cls);
+                
+                var sCnt = data.Successors && data.Successors.Count || 0;
+                var cls = sCnt > 0 ? "risk" : "no-risk";  
+                html += Ext.String.format('<br/><br/><span class="***REMOVED***2***REMOVED*** artifact-icon icon-successor"></span><a href="/#/detail***REMOVED***0***REMOVED***/dependencies" target="_blank" class="***REMOVED***2***REMOVED***"><b>***REMOVED***1***REMOVED*** successors(s)</b></a>',ref,sCnt,cls);;
+
+                //html += Ext.String.format('&nbsp;&nbsp;&nbsp;&nbsp;and <a href="/#/detail***REMOVED***0***REMOVED***/children" target="_blank" class="feature-dependency"><b>***REMOVED***1***REMOVED*** Feature predecessor(s)</b></a>.',ref,this.featurePredecessors);
+                //html += Ext.String.format('<span class="feature-dependency artifact-icon icon-successor"></span><a href="/#/detail***REMOVED***0***REMOVED***/children" target="_blank" class="feature-dependency"><b>***REMOVED***1***REMOVED*** Feature successor(s)</b></a>.',ref,this.featureSuccessors);
+                return  html; 
+
+            ***REMOVED***,
             createRiskIcon: function (riskCount) ***REMOVED***
                 var className = 'icon-warning risk';
                 if (riskCount === 0)***REMOVED***
@@ -111,7 +126,9 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
          */
         record: undefined,
         notesField: undefined,
-        context: null
+        context: null,
+        featurePredecessors: null,
+        featureSuccessors: null 
     ***REMOVED***,
     
     constructor: function (config) ***REMOVED***
@@ -121,8 +138,10 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
         if ( config && config.record && !Ext.isEmpty( Ext.getClass(config.record) )) ***REMOVED***
             config.record = config.record.getData();
         ***REMOVED***
-        this.context = config.context;
+        //this.context = config.context;
         this.renderTpl.context = config.context;
+        this.renderTpl.featurePredecessors = config.featurePredecessors;
+        this.renderTpl.featureSuccessors = config.featureSuccessors;
         this.mergeConfig(config);
         this.callParent([this.config]);
     ***REMOVED***    

@@ -11,7 +11,7 @@ Ext.define("Rally.app.widget.portfolioImpliedStateProjectDistribution",***REMOVE
             marginTop: 100
         ***REMOVED***,
         title: ***REMOVED***
-            text: 'Assigned Features & Teams',
+            text: 'Assigned Features & Squads',
             style: ***REMOVED***
                 color: '#444',
                 fontFamily:'ProximaNova',
@@ -37,6 +37,7 @@ Ext.define("Rally.app.widget.portfolioImpliedStateProjectDistribution",***REMOVE
             title: ***REMOVED***
                 text: ''
             ***REMOVED***,
+            minTickInterval: 1,
             labels: ***REMOVED***
                 style: ***REMOVED***
                     color: '#444',

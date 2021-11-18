@@ -240,8 +240,60 @@
 ***REMOVED***
 .no-risk ***REMOVED***
   font-family: ProximaNova;
-  font-size:18px;
+  font-size:16px;
   color: #009933;
   font-weight: bolder;
   padding: 10;
+***REMOVED***
+
+.feature-dependency ***REMOVED***
+  font-family: ProximaNova;
+  font-size:14px;
+  color: #004299;
+  font-weight: bold;
+  padding: 10;
+***REMOVED***
+.legend-title ***REMOVED***
+  font-family: ProximaNova;
+  font-size:14px;
+  padding: 3px;
+***REMOVED***
+.legend ***REMOVED***
+  font-family: ProximaNova;
+  font-size:12px;
+  padding: 3px;
+***REMOVED***
+.legend-dot ***REMOVED***
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+***REMOVED***
+
+.not-defined ***REMOVED***
+  background-color: #CCCCCC;
+***REMOVED***
+.not-started ***REMOVED***
+  background-color: #999999;
+***REMOVED***
+.in-progress ***REMOVED***
+  background-color: #00a9e0;
+***REMOVED***
+.done ***REMOVED***
+  background-color: #009933;
+***REMOVED*** 
+.health-red***REMOVED***
+  background-color: #F66349;
+***REMOVED***
+.health-green ***REMOVED***
+  background-color: #8DC63F;
+***REMOVED***
+.health-yellow***REMOVED***
+  background-color: #FAD200;
+***REMOVED***
+.health-white***REMOVED***
+  background-color: #E0E0E0;
+***REMOVED***
+.health-gray***REMOVED***
+  background-color: #D1D1D1;
 ***REMOVED***
