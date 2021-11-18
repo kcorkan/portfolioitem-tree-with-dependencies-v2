@@ -114,7 +114,14 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
                 d3.select("#tree").remove();
                 gApp._nodeTree = null;
             }
-            this.down('#treeContainer').removeAll(); 
+            if (this.down('#treeContainer')){
+                this.down('#treeContainer').destroy();
+            }
+
+            this.add({
+                xtype: 'container',
+                itemId: 'treeContainer'
+            });
             
             this.down('#treeContainer').add({
                 xtype: 'portfolioitemtree',
@@ -1064,10 +1071,10 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             //         cls: 'xxfilterbox'
             //     });
 
-            this.add({
-                xtype: 'container',
-                itemId: 'treeContainer'
-            });
+            // this.add({
+            //     xtype: 'container',
+            //     itemId: 'treeContainer'
+            // });
                 // this.add({
                 //     xtype: 'portfolioitemtree',
                 //     itemId: 'rootSurface',
