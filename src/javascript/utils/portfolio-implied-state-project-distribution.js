@@ -67,7 +67,7 @@ Ext.define("Rally.app.widget.portfolioImpliedStateProjectDistribution",***REMOVE
                     ***REMOVED***
                 ***REMOVED***,
                 min: 0,
-                minTickInterval: 1
+                allowDecimals: false
             ***REMOVED***,
         legend: ***REMOVED***
             itemStyle: ***REMOVED***
