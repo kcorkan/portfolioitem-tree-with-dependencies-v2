@@ -714,37 +714,38 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             var deferred = Ext.create('Deft.Deferred');
             if (!records || records.length === 0){
                 deferred.resolve([]);
-            }
-            var rootRecord = records[0];  
-              
-            var rootRecordLevel = this._getSelectedOrdinal(); 
-            var promises = [];
-            var parentProperty = "ObjectID",
-                parentPropertyValue = rootRecord.get("ObjectID");
-            for (var i=rootRecordLevel; i>0; i--){
-                parentProperty = "Parent." + parentProperty;
-                var childConfig = this.getChildStoreConfig(i-1,parentProperty, parentPropertyValue);
-                promises.push(this.loadWsapiRecords(childConfig));
-            }
-            if (promises.length > 0){
-                Deft.Promise.all(promises).then({
-                    success: function(results){
-                        console.log('results',results)
-                        var records = _.reduce(results, function(arr,result){ 
-                            arr = arr.concat(result); 
-                            return arr;
-                        },[rootRecord]);
-                        console.log('records',records);
-                        deferred.resolve(records);
-                    },
-                    failure: function(msg){
-                        deferred.reject(msg); 
-                    },
-                    scope: this 
-                });
             } else {
-                deferred.resolve([]);
+                var rootRecord = records[0];  
+                var rootRecordLevel = this._getSelectedOrdinal(); 
+                var promises = [];
+                var parentProperty = "ObjectID",
+                    parentPropertyValue = rootRecord.get("ObjectID");
+                for (var i=rootRecordLevel; i>0; i--){
+                    parentProperty = "Parent." + parentProperty;
+                    var childConfig = this.getChildStoreConfig(i-1,parentProperty, parentPropertyValue);
+                    promises.push(this.loadWsapiRecords(childConfig));
+                }
+                if (promises.length > 0){
+                    Deft.Promise.all(promises).then({
+                        success: function(results){
+                            console.log('results',results)
+                            var records = _.reduce(results, function(arr,result){ 
+                                arr = arr.concat(result); 
+                                return arr;
+                            },[rootRecord]);
+                            console.log('records',records);
+                            deferred.resolve(records);
+                        },
+                        failure: function(msg){
+                            deferred.reject(msg); 
+                        },
+                        scope: this 
+                    });
+                } else {
+                    deferred.resolve([]);
+                }
             }
+            
             return deferred.promise; 
         },
         loadWsapiRecords: function(config){
