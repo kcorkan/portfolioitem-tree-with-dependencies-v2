@@ -15,7 +15,8 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             hideArchived: true,
             showFilter: true,
             allowMultiSelect: false,
-            colorOption: 'Implied State'
+            colorOption: 'Implied State',
+            displayName: false  
         }
     },
      
@@ -289,8 +290,12 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             return lClass;
         },
         _getNodeText: function(d){
-            var titleText = d.children ? d.data.Name : d.data.Name + ' ' + (d.data.record && d.data.record.data.Name); 
-            console.log('titleText',titleText);
+            var showFullName = (gApp.getShowName() || d.children == undefined) && (d.parent !== null);
+            var titleText = d.data.Name;
+            if (showFullName){
+                titleText +=  ' ' + (d.data.record && d.data.record.data.Name); 
+            } 
+           
             if ((d.data.record.data._ref !== 'root') && gApp.getSetting('showExtraText')) {
                 var prelimName = d.data.record.get('PreliminaryEstimate') && d.data.record.get('PreliminaryEstimate').Name || "";
                 if (prelimName){
@@ -298,6 +303,10 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
                 }
             }
             return titleText; 
+        },
+        getShowName: function(){
+
+            return this.getSetting('displayName') === true || this.getSetting('displayName') === 'true';
         },
         _getNodeId: function(d){
             var nodeId = Ext.id();
@@ -1156,12 +1165,12 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
                 fieldLabel: 'Show Advanced filter',
                 name: 'showFilter',
                 labelAlign: 'top'
-            // },
-            // {
-            //     xtype: 'rallycheckboxfield',
-            //     fieldLabel: 'Use DisplayColor',
-            //     name: 'useColour',
-            //     labelAlign: 'top'
+            },
+            {
+                xtype: 'rallycheckboxfield',
+                fieldLabel: 'Display item names at all levels',
+                name: 'displayName',
+                labelAlign: 'top'
             },{
                 xtype: 'rallycombobox',
                 fieldLabel: 'Dot Color',
