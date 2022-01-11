@@ -25,7 +25,7 @@ Ext.define('Rally.app.PortfolioItemView',***REMOVED***
             ***REMOVED***,
             getPlannedStartDate: function (values) ***REMOVED***
                 console.log('getplannedstartdate',this.context)
-                var val = values.PlannedStartDate && Rally.util.DateTime.formatWithDefault(values.PlannedstartDate, this.context) || "Not populated";
+                var val = values.PlannedStartDate && Rally.util.DateTime.formatWithDefault(values.PlannedStartDate, this.context) || "Not populated";
                 var cls = "timeline-gray";
                 if (val === "Not populated")***REMOVED***
                     cls = "timeline-red";
