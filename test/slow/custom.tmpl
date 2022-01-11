@@ -12,100 +12,100 @@
     <script type="text/javascript" src="<%= options.auth.server %>/apps/<%= options.sdk %>/sdk-debug.js"></script>
     <script type="text/javascript" src="<%= options.auth.server %>/apps/<%= options.sdk %>/lib/analytics/analytics-all.js"></script>
         
-    <% with (scripts) ***REMOVED*** %>
-    <% [].concat(jasmine, vendor, reporters).forEach(function(script)***REMOVED*** %>
+    <% with (scripts) { %>
+    <% [].concat(jasmine, vendor, reporters).forEach(function(script){ %>
     <script src="<%= script %>"></script>
-    <% ***REMOVED***) %>
-    <% ***REMOVED***; %>
+    <% }) %>
+    <% }; %>
     
-    <% with (scripts) ***REMOVED*** %>
-    <% [].concat(helpers, specs).forEach(function(script)***REMOVED*** %>
+    <% with (scripts) { %>
+    <% [].concat(helpers, specs).forEach(function(script){ %>
     <script src="<%= script %>"></script>
-    <% ***REMOVED***) %>
-    <% ***REMOVED***; %>
+    <% }) %>
+    <% }; %>
     
         
     <script type="text/javascript">
         //Redefine onReady - bug in phantomjs such that onload isn't triggered for <link>, so the default Rally onReady won't work consistently
 
-        Ext.override(Rally.sdk.Bootstrapper,***REMOVED***
-            onReady: function(onready) ***REMOVED***
-                if (!Rally.environment) ***REMOVED***
+        Ext.override(Rally.sdk.Bootstrapper,{
+            onReady: function(onready) {
+                if (!Rally.environment) {
                     Ext.create('Rally.sdk.env.Global').setup();
-                ***REMOVED***
+                }
                 var context = Rally.environment.getContext();
 
                 var sdkInfo = this.getSdkInfo();
 
-                if (!context || (sdkInfo.project && sdkInfo.project !== '/project/' + context.getProject().ObjectID)) ***REMOVED***
+                if (!context || (sdkInfo.project && sdkInfo.project !== '/project/' + context.getProject().ObjectID)) {
                     var loader = this._getContextLoader();
-                    loader.load(***REMOVED***
+                    loader.load({
                         project: sdkInfo.project,
-                        success: function (rawContext) ***REMOVED***
+                        success: function (rawContext) {
                             rawContext.scope.up = Ext.isDefined(sdkInfo.projectScopeUp) ? sdkInfo.projectScopeUp : false;
                             rawContext.scope.down = Ext.isDefined(sdkInfo.projectScopeDown) ? sdkInfo.projectScopeDown : true;
     
-                            if (window.sdkConfig && window.sdkConfig.apiBaseUrl) ***REMOVED***
+                            if (window.sdkConfig && window.sdkConfig.apiBaseUrl) {
                                 rawContext.apiBaseUrl = window.sdkConfig.apiBaseUrl;
-                            ***REMOVED***
+                            }
     
                             Rally.environment.externalContext = rawContext;
                             //this._loadResources();
                             onready();
-                        ***REMOVED***,
+                        },
                         scope: this
-                    ***REMOVED***);
-                ***REMOVED***
+                    });
+                }
                     
                 onready();
-            ***REMOVED***
+            }
 /*,
-            onReady: function (onReady) ***REMOVED***
-                if (this._ready) ***REMOVED***
+            onReady: function (onReady) {
+                if (this._ready) {
                     return onReady();
-                ***REMOVED*** else if (this._readyInProgress) ***REMOVED***
+                } else if (this._readyInProgress) {
                     this._onReadyFns.push(onReady);
-                ***REMOVED*** else ***REMOVED***
+                } else {
                     this._readyInProgress = true;
                     this._onReadyFns = [onReady];
                     
-                    if (!Rally.environment) ***REMOVED***
+                    if (!Rally.environment) {
                         Ext.create('Rally.sdk.env.Global').setup();
-                    ***REMOVED***
+                    }
         
                     //this._secureJsonPRequests();
         
                     var context = Rally.environment.getContext();
                     var sdkInfo = this.getSdkInfo();
-                    if (!context || (sdkInfo.project && sdkInfo.project !== '/project/' + context.getProject().ObjectID)) ***REMOVED***
+                    if (!context || (sdkInfo.project && sdkInfo.project !== '/project/' + context.getProject().ObjectID)) {
                         var loader = this._getContextLoader();
-                        loader.load(***REMOVED***
+                        loader.load({
                             project: sdkInfo.project,
-                            success: function (rawContext) ***REMOVED***
+                            success: function (rawContext) {
                                 rawContext.scope.up = Ext.isDefined(sdkInfo.projectScopeUp) ? sdkInfo.projectScopeUp : false;
                                 rawContext.scope.down = Ext.isDefined(sdkInfo.projectScopeDown) ? sdkInfo.projectScopeDown : true;
         
-                                if (window.sdkConfig && window.sdkConfig.apiBaseUrl) ***REMOVED***
+                                if (window.sdkConfig && window.sdkConfig.apiBaseUrl) {
                                     rawContext.apiBaseUrl = window.sdkConfig.apiBaseUrl;
-                                ***REMOVED***
+                                }
         
                                 Rally.environment.externalContext = rawContext;
                                 this._loadResources();
-                            ***REMOVED***,
+                            },
                             scope: this
-                        ***REMOVED***);
-                    ***REMOVED*** else ***REMOVED***
+                        });
+                    } else {
                         this._loadResources();
-                    ***REMOVED*** 
+                    } 
                     onReady();
-                ***REMOVED***
-            ***REMOVED****/
-        ***REMOVED***);
+                }
+            }*/
+        });
         
                 
-       // Rally.onReady(function () ***REMOVED***
+       // Rally.onReady(function () {
        
-       var afterWait = function() ***REMOVED***
+       var afterWait = function() {
             // get us logged in
             var token = '<%= options.auth.username %>:<%= options.auth.password %>';
             var auth_string = 'Basic ' + Base64.encode(token);
@@ -115,21 +115,21 @@
             Ext.Ajax.useDefaultXhrHeader = false;
             Ext.Ajax.withCredentials=true;
             
-            Ext.Ajax.request(***REMOVED***
+            Ext.Ajax.request({
                 url: url,
                 method: 'GET',
-                headers: ***REMOVED***
+                headers: {
                     'Authorization': auth_string
-                ***REMOVED***,
-                success: function(response)***REMOVED***
+                },
+                success: function(response){
                     // when we've successfully logged in, load our scripts
                     Rally.loadScripts(<%= JSON.stringify(options.js_files) %>,
-                    function() ***REMOVED***        
+                    function() {        
                         // define an app that we're loading to set context  TODO: Is this necessary?
-                        Ext.define('TestApp',***REMOVED***
+                        Ext.define('TestApp',{
                             extend: 'Rally.app.App',
                             componentCls: 'app',
-                            launch: function() ***REMOVED***
+                            launch: function() {
                                 // when app is loaded, we can run our jasmine tests!
                                 var jasmineEnv = jasmine.getEnv();
     
@@ -137,22 +137,22 @@
                                 var htmlReporter = new jasmine.HtmlReporter();
                                 jasmineEnv.addReporter(htmlReporter);
     
-                                jasmineEnv.specFilter = function (spec) ***REMOVED***
+                                jasmineEnv.specFilter = function (spec) {
                                     return htmlReporter.specFilter(spec);
-                                ***REMOVED***;
+                                };
     
                                 jasmineEnv.execute();
-                            ***REMOVED***
-                        ***REMOVED***);
+                            }
+                        });
                         console.warn("Ignore the context.getUser null error below!");
-                        Rally.launchApp('TestApp', ***REMOVED***
+                        Rally.launchApp('TestApp', {
                             name: 'Test Accessible App'
-                        ***REMOVED***);
-                    ***REMOVED***, true);
-                ***REMOVED***
-            ***REMOVED***);
-        // ***REMOVED***);
-        ***REMOVED***
+                        });
+                    }, true);
+                }
+            });
+        // });
+        }
         
         setTimeout(afterWait(), 1000);
     </script>

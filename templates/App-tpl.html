@@ -19,13 +19,13 @@
 
 
     <script type="text/javascript">
-        Rally.onReady(function() ***REMOVED***
+        Rally.onReady(function() {
             <%= js_contents %>
 
-               Rally.launchApp('<%= className %>', ***REMOVED***
+               Rally.launchApp('<%= className %>', {
                    name: '<%= name %>'
-               ***REMOVED***);
-        ***REMOVED***);
+               });
+        });
     </script>
 
     <style type="text/css">

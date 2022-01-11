@@ -1,12 +1,12 @@
-describe("Example test set", function() ***REMOVED***
-    it("should have written tests",function()***REMOVED***
+describe("Example test set", function() {
+    it("should have written tests",function(){
         expect(false).toBe(true);
         expect(Ext.Date.format(new Date(),'Y')).toEqual('2013');
-    ***REMOVED***);
+    });
     
-    it('should render the app', function() ***REMOVED***
+    it('should render the app', function() {
         var app = Rally.test.Harness.launchApp("Rally.app.PortfolioItemTreeWithDependenceis");
         expect(app.getEl()).toBeDefined();
-    ***REMOVED***);
+    });
     
-***REMOVED***);
+});

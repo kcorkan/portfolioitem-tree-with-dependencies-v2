@@ -1,84 +1,84 @@
-Ext.define("Rally.app.widget.portfolioProjectDistribution",***REMOVED***
+Ext.define("Rally.app.widget.portfolioProjectDistribution",{
     extend: 'Rally.ui.chart.Chart',
     alias: 'widget.portfolioprojectdistribution',
 
     records: null,
-    chartData: ***REMOVED******REMOVED***,
-    chartConfig: ***REMOVED***
-        chart: ***REMOVED***
+    chartData: {},
+    chartConfig: {
+        chart: {
             type: 'pie'
-        ***REMOVED***,
-        title: ***REMOVED***
+        },
+        title: {
             text: 'Feature Distribution across Teams',
-            style: ***REMOVED***
+            style: {
                 color: '#444',
                 fontFamily:'ProximaNova',
                 textTransform: 'uppercase',
                 fill:'#444'
-            ***REMOVED***
-        ***REMOVED***,
+            }
+        },
 
-        tooltip: ***REMOVED***
-            pointFormat: '***REMOVED***series.name***REMOVED***: <b>***REMOVED***point.percentage:.1f***REMOVED***%</b>',
-            style: ***REMOVED***
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+            style: {
                 color: '#444',
                 fontFamily:'ProximaNova',
                 textTransform: 'uppercase',
                 fill:'#444'
-            ***REMOVED***
-        ***REMOVED***,
-        plotOptions: ***REMOVED***
-            pie: ***REMOVED***
+            }
+        },
+        plotOptions: {
+            pie: {
                 allowPointSelect: true,
                 cursor: 'pointer',
-                dataLabels: ***REMOVED***
+                dataLabels: {
                     enabled: true,
-                    format: '<b>***REMOVED***point.name***REMOVED***</b>: ***REMOVED***point.percentage:.1f***REMOVED*** %',
-                    style: ***REMOVED***
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
                         color: '#444',
                         fontFamily:'ProximaNova',
                         textTransform: 'uppercase',
                         fill:'#444'
-                    ***REMOVED***
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***,
-    ***REMOVED***,
+                    }
+                }
+            }
+        },
+    },
     
-    constructor: function(config)***REMOVED***
+    constructor: function(config){
         
-        if (config.title)***REMOVED***
+        if (config.title){
             this.chartConfig.title = config.title;
-        ***REMOVED***
+        }
         this.chartData = this._getChartData(config.records);
         console.log('chartData',this.chartData);
         this.callParent(arguments);
-    ***REMOVED***,
-    _getChartData: function(records) ***REMOVED***
+    },
+    _getChartData: function(records) {
 
-        var projectHash = _.reduce(records, function(h,r)***REMOVED***
+        var projectHash = _.reduce(records, function(h,r){
             var pName = r.get('Project').Name; 
-            if (!h[pName])***REMOVED*** h[pName] = 0; ***REMOVED***
+            if (!h[pName]){ h[pName] = 0; }
             h[pName]++;
             return h;  
-        ***REMOVED***,***REMOVED******REMOVED***);
+        },{});
         
-        var series = ***REMOVED***
+        var series = {
             name: 'Teams',
             colorByPoint: true,
             data: []
-        ***REMOVED***;
-        _.each(projectHash, function(v,k)***REMOVED***
-            series.data.push(***REMOVED***
+        };
+        _.each(projectHash, function(v,k){
+            series.data.push({
                 name: k,
                 y: v 
-            ***REMOVED***);
-        ***REMOVED***);
+            });
+        });
         console.log('series',series);
-        return ***REMOVED***
+        return {
             series:[series]
-        ***REMOVED***;
-    ***REMOVED***,
+        };
+    },
 
 
-***REMOVED***);
+});

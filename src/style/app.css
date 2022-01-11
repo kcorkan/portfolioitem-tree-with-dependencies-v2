@@ -1,6 +1,6 @@
-.app ***REMOVED***
-***REMOVED***
-.tsinfolink ***REMOVED***
+.app {
+}
+.tsinfolink {
     position:absolute;
     right:0px;
     width: 14px;
@@ -14,151 +14,151 @@
     margin-top: 25px;
     margin-right: 5px;
     cursor: pointer;
-***REMOVED***
-.detail-toolbar ***REMOVED***
+}
+.detail-toolbar {
     background-color: rgb(16,53,112)!important;
-***REMOVED***
-.toolbar-button ***REMOVED***
+}
+.toolbar-button {
     background-color: rgb(16,53,112)!important;
     border-color: rgb(16,53,112)!important;
-***REMOVED***
+}
 
-.node text ***REMOVED***
+.node text {
     font: 14px sans-serif;
-  ***REMOVED***
+  }
   
-  .info--box text ***REMOVED***
+  .info--box text {
       font-size: 14px;
       font-family: "ProximaNovaSemiBold,Helvetica,Arial"
-  ***REMOVED***
-  .node--internal text ***REMOVED***
+  }
+  .node--internal text {
     text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
-  ***REMOVED***
-  .local--link ***REMOVED***
+  }
+  .local--link {
     fill: none;
     stroke: #111;
     stroke-opacity: 0.4;
     stroke-width: 1.5px;
-  ***REMOVED***
-  .remote--link ***REMOVED***
+  }
+  .remote--link {
     fill: none;
     stroke: #ddd;
     stroke-opacity: 0.4;
     stroke-width: 1.5px;
-  ***REMOVED***
-  .invisible--link ***REMOVED***
+  }
+  .invisible--link {
     fill: none;
     stroke: #ddd;
     stroke-opacity: 0.0;
     stroke-width: 1.5px;
-  ***REMOVED***
+  }
   
-  .predecessor--link ***REMOVED***
+  .predecessor--link {
     fill: dashed;
     stroke: lightblue;
     stroke-opacity: 0.5;
     stroke-width: 3px;
-  ***REMOVED***
-  .error--node  ***REMOVED***
+  }
+  .error--node  {
     fill: rgb(0, 0, 0);
-  ***REMOVED***
-  .data--errors  ***REMOVED***
+  }
+  .data--errors  {
     stroke: #f00;
     stroke-width: 3px;
-  ***REMOVED***
-  .no--errors ***REMOVED***
+  }
+  .no--errors {
     stroke: #111;
     stroke-width: 2px;
-  ***REMOVED***
-  .no--errors--not--started ***REMOVED***
+  }
+  .no--errors--not--started {
     fill: #00ffff;
     stroke: #111;
     stroke-width: 2px;
-  ***REMOVED***
-  .no--errors--in--progress ***REMOVED***
+  }
+  .no--errors--in--progress {
     fill: #0f0;
     stroke: #00f;
     stroke-width: 2px;
-  ***REMOVED***
+  }
   
-  .dotOutline ***REMOVED***
+  .dotOutline {
     stroke: #000;
     stroke-width: 2px;
-  ***REMOVED***
+  }
   
-  .gotDependencies ***REMOVED***
+  .gotDependencies {
     stroke: #f00;
     stroke-width: 2px;
     fill: #ff0000;
-  ***REMOVED***
+  }
   
-  .gotSuccText ***REMOVED***
+  .gotSuccText {
     fill: #888800;
-  ***REMOVED***
-  .gotPredText ***REMOVED***
+  }
+  .gotPredText {
     fill: #ff0000;
-  ***REMOVED***
+  }
   
-  .boldText ***REMOVED***
+  .boldText {
     font-weight: bold;
-  ***REMOVED***
+  }
   
-  .RAID-blue ***REMOVED***
+  .RAID-blue {
     border-radius: 10px;
     border: 2px solid black;
     height: 20px;
     width: 20px;
     background-color: #145FAC;
-  ***REMOVED***
+  }
   
-  .RAID-red ***REMOVED***
+  .RAID-red {
     border-radius: 10px;
     border: 2px solid black;
     height: 20px;
     width: 20px;
     background-color: #ff005c;
-  ***REMOVED***
+  }
   
-  .RAID-amber ***REMOVED***
+  .RAID-amber {
     border-radius: 10px;
     border: 2px solid black;
     background-color: #f3ca5e;
     height: 20px;
     width: 20px;
-  ***REMOVED***
+  }
   
-  .RAID-green ***REMOVED***
+  .RAID-green {
     border-radius: 10px;
     border: 2px solid black;
     height: 20px;
     width: 20px;
     background: #b3ee01;
-  ***REMOVED***
+  }
   
-  .q0-3***REMOVED***fill:rgb(252,141,89)***REMOVED***  .q1-3***REMOVED***fill:rgb(255,255,191)***REMOVED***  .q2-3***REMOVED***fill:rgb(145,191,219)***REMOVED***
-   .q0-4***REMOVED***fill:rgb(215,25,28)***REMOVED***  .q1-4***REMOVED***fill:rgb(253,174,97)***REMOVED***  .q2-4***REMOVED***fill:rgb(171,217,233)***REMOVED***  .q3-4***REMOVED***fill:rgb(44,123,182)***REMOVED***
-   .q0-5***REMOVED***fill:rgb(215,25,28)***REMOVED***  .q1-5***REMOVED***fill:rgb(253,174,97)***REMOVED***  .q2-5***REMOVED***fill:rgb(255,255,191)***REMOVED***  .q3-5***REMOVED***fill:rgb(171,217,233)***REMOVED***  .q4-5***REMOVED***fill:rgb(44,123,182)***REMOVED***
-   .q0-6***REMOVED***fill:rgb(215,48,39)***REMOVED***  .q1-6***REMOVED***fill:rgb(252,141,89)***REMOVED***  .q2-6***REMOVED***fill:rgb(254,224,144)***REMOVED***  .q3-6***REMOVED***fill:rgb(224,243,248)***REMOVED***  .q4-6***REMOVED***fill:rgb(145,191,219)***REMOVED***  .q5-6***REMOVED***fill:rgb(69,117,180)***REMOVED***
-   .q0-7***REMOVED***fill:rgb(215,48,39)***REMOVED***  .q1-7***REMOVED***fill:rgb(252,141,89)***REMOVED***  .q2-7***REMOVED***fill:rgb(254,224,144)***REMOVED***  .q3-7***REMOVED***fill:rgb(255,255,191)***REMOVED***  .q4-7***REMOVED***fill:rgb(224,243,248)***REMOVED***  .q5-7***REMOVED***fill:rgb(145,191,219)***REMOVED***  .q6-7***REMOVED***fill:rgb(69,117,180)***REMOVED***
-   .q0-8***REMOVED***fill:rgb(215,48,39)***REMOVED***  .q1-8***REMOVED***fill:rgb(244,109,67)***REMOVED***  .q2-8***REMOVED***fill:rgb(253,174,97)***REMOVED***  .q3-8***REMOVED***fill:rgb(254,224,144)***REMOVED***  .q4-8***REMOVED***fill:rgb(224,243,248)***REMOVED***  .q5-8***REMOVED***fill:rgb(171,217,233)***REMOVED***  .q6-8***REMOVED***fill:rgb(116,173,209)***REMOVED***  .q7-8***REMOVED***fill:rgb(69,117,180)***REMOVED***
-   .q0-9***REMOVED***fill:rgb(215,48,39)***REMOVED***  .q1-9***REMOVED***fill:rgb(244,109,67)***REMOVED***  .q2-9***REMOVED***fill:rgb(253,174,97)***REMOVED***  .q3-9***REMOVED***fill:rgb(254,224,144)***REMOVED***  .q4-9***REMOVED***fill:rgb(255,255,191)***REMOVED***  .q5-9***REMOVED***fill:rgb(224,243,248)***REMOVED***  .q6-9***REMOVED***fill:rgb(171,217,233)***REMOVED***  .q7-9***REMOVED***fill:rgb(116,173,209)***REMOVED***  .q8-9***REMOVED***fill:rgb(69,117,180)***REMOVED***
+  .q0-3{fill:rgb(252,141,89)}  .q1-3{fill:rgb(255,255,191)}  .q2-3{fill:rgb(145,191,219)}
+   .q0-4{fill:rgb(215,25,28)}  .q1-4{fill:rgb(253,174,97)}  .q2-4{fill:rgb(171,217,233)}  .q3-4{fill:rgb(44,123,182)}
+   .q0-5{fill:rgb(215,25,28)}  .q1-5{fill:rgb(253,174,97)}  .q2-5{fill:rgb(255,255,191)}  .q3-5{fill:rgb(171,217,233)}  .q4-5{fill:rgb(44,123,182)}
+   .q0-6{fill:rgb(215,48,39)}  .q1-6{fill:rgb(252,141,89)}  .q2-6{fill:rgb(254,224,144)}  .q3-6{fill:rgb(224,243,248)}  .q4-6{fill:rgb(145,191,219)}  .q5-6{fill:rgb(69,117,180)}
+   .q0-7{fill:rgb(215,48,39)}  .q1-7{fill:rgb(252,141,89)}  .q2-7{fill:rgb(254,224,144)}  .q3-7{fill:rgb(255,255,191)}  .q4-7{fill:rgb(224,243,248)}  .q5-7{fill:rgb(145,191,219)}  .q6-7{fill:rgb(69,117,180)}
+   .q0-8{fill:rgb(215,48,39)}  .q1-8{fill:rgb(244,109,67)}  .q2-8{fill:rgb(253,174,97)}  .q3-8{fill:rgb(254,224,144)}  .q4-8{fill:rgb(224,243,248)}  .q5-8{fill:rgb(171,217,233)}  .q6-8{fill:rgb(116,173,209)}  .q7-8{fill:rgb(69,117,180)}
+   .q0-9{fill:rgb(215,48,39)}  .q1-9{fill:rgb(244,109,67)}  .q2-9{fill:rgb(253,174,97)}  .q3-9{fill:rgb(254,224,144)}  .q4-9{fill:rgb(255,255,191)}  .q5-9{fill:rgb(224,243,248)}  .q6-9{fill:rgb(171,217,233)}  .q7-9{fill:rgb(116,173,209)}  .q8-9{fill:rgb(69,117,180)}
   
-   @keyframes textBlink ***REMOVED***
-    50% ***REMOVED***
+   @keyframes textBlink {
+    50% {
       opacity: 0.5;
-    ***REMOVED***
-  ***REMOVED***
-  @-webkit-keyframes textBlink ***REMOVED***
-    50% ***REMOVED***
+    }
+  }
+  @-webkit-keyframes textBlink {
+    50% {
       opacity: 0.5;
-    ***REMOVED***
-  ***REMOVED***
-  .textBlink ***REMOVED***
+    }
+  }
+  .textBlink {
     animation: textBlink 1s step-start 0s infinite;
     -webkit-animation: textBlink 1s step-start 0s infinite;
-  ***REMOVED***
+  }
   
-  .RAID-missing-severity ***REMOVED***
+  .RAID-missing-severity {
     border-radius: 10px;
     border: 2px solid red;
     height: 20px;
@@ -167,8 +167,8 @@
     background: linear-gradient(#ffffff 50%, #ff0000 50%);
     background-size: 20% 100%;
     background-repeat: repeat-x;
-  ***REMOVED***
-  .RAID-missing-probability ***REMOVED***
+  }
+  .RAID-missing-probability {
     border-radius: 10px;
     border: 2px solid red;
     height: 20px;
@@ -177,123 +177,123 @@
     background: linear-gradient(#ff0000 50%, #ffffff 50%);
     background-size: 20% 100%;
     background-repeat: repeat-x;
-  ***REMOVED***
-  .RAID-missing-severity-probability ***REMOVED***
+  }
+  .RAID-missing-severity-probability {
     border-radius: 10px;
     border: 2px solid red;
     height: 20px;
     width: 20px;
     background-color: white;
-  ***REMOVED***
+  }
 
-  .highcharts-tooltip ***REMOVED***
+  .highcharts-tooltip {
     font-family:NotoSansBold;
     color:white;
-***REMOVED***
-.tooltip-point ***REMOVED***
+}
+.tooltip-point {
     text-align: right;
     color: white;
-***REMOVED***
-.tooltip-label ***REMOVED***
+}
+.tooltip-label {
     font-family:NotoSans;
     white-space:nowrap;
     font-size:13px;
     color:white;
-***REMOVED***
-.etlDate ***REMOVED***
+}
+.etlDate {
     color: grey;
     font-family:NotoSans;
     font-style: italic;
-***REMOVED***
-.timeline ***REMOVED***
+}
+.timeline {
   font-family: ProximaNova;
   font-size:12px;
-***REMOVED***
-.timeline-green ***REMOVED***
+}
+.timeline-green {
   color: #009933;
-***REMOVED***
-.timeline-yellow ***REMOVED***
+}
+.timeline-yellow {
   color: #FAD200;
-***REMOVED***
-.timeline-red ***REMOVED***
+}
+.timeline-red {
   color: #B81B10;
-***REMOVED***
-.timeline-gray ***REMOVED***
+}
+.timeline-gray {
     color:#999999;
-***REMOVED***
-.timeline-label ***REMOVED***
+}
+.timeline-label {
     color:#444;
     font-weight: bold;
     text-transform: uppercase;
     text-align: right;
-***REMOVED***
-.timeline-blue ***REMOVED***
+}
+.timeline-blue {
   color: #00a9e0;
-***REMOVED***
+}
 
-.risk ***REMOVED***
+.risk {
   font-family: ProximaNova;
   font-size:18px;
   color: #FAD200;
   font-weight: bolder;
   padding: 10;
-***REMOVED***
-.no-risk ***REMOVED***
+}
+.no-risk {
   font-family: ProximaNova;
   font-size:16px;
   color: #009933;
   font-weight: bolder;
   padding: 10;
-***REMOVED***
+}
 
-.feature-dependency ***REMOVED***
+.feature-dependency {
   font-family: ProximaNova;
   font-size:14px;
   color: #004299;
   font-weight: bold;
   padding: 10;
-***REMOVED***
-.legend-title ***REMOVED***
+}
+.legend-title {
   font-family: ProximaNova;
   font-size:14px;
   padding: 3px;
-***REMOVED***
-.legend ***REMOVED***
+}
+.legend {
   font-family: ProximaNova;
   font-size:12px;
   padding: 3px;
-***REMOVED***
-.legend-dot ***REMOVED***
+}
+.legend-dot {
   height: 15px;
   width: 15px;
   border-radius: 50%;
   display: inline-block;
-***REMOVED***
+}
 
-.not-defined ***REMOVED***
+.not-defined {
   background-color: #CCCCCC;
-***REMOVED***
-.not-started ***REMOVED***
+}
+.not-started {
   background-color: #999999;
-***REMOVED***
-.in-progress ***REMOVED***
+}
+.in-progress {
   background-color: #00a9e0;
-***REMOVED***
-.done ***REMOVED***
+}
+.done {
   background-color: #009933;
-***REMOVED*** 
-.health-red***REMOVED***
+} 
+.health-red{
   background-color: #F66349;
-***REMOVED***
-.health-green ***REMOVED***
+}
+.health-green {
   background-color: #8DC63F;
-***REMOVED***
-.health-yellow***REMOVED***
+}
+.health-yellow{
   background-color: #FAD200;
-***REMOVED***
-.health-white***REMOVED***
+}
+.health-white{
   background-color: #E0E0E0;
-***REMOVED***
-.health-gray***REMOVED***
+}
+.health-gray{
   background-color: #D1D1D1;
-***REMOVED***
+}

@@ -1,42 +1,42 @@
-Ext.define('TSUtilities', ***REMOVED***
+Ext.define('TSUtilities', {
 
     singleton: true,
 
-    loadWsapiRecords: function(config)***REMOVED***
+    loadWsapiRecords: function(config){
         var deferred = Ext.create('Deft.Deferred');
-        var default_config = ***REMOVED***
+        var default_config = {
             model: 'Defect',
             fetch: ['ObjectID']
-        ***REMOVED***;
-        Ext.create('Rally.data.wsapi.Store', Ext.Object.merge(default_config,config)).load(***REMOVED***
-            callback : function(records, operation, successful) ***REMOVED***
-                if (successful)***REMOVED***
+        };
+        Ext.create('Rally.data.wsapi.Store', Ext.Object.merge(default_config,config)).load({
+            callback : function(records, operation, successful) {
+                if (successful){
                     deferred.resolve(records);
-                ***REMOVED*** else ***REMOVED***
+                } else {
                     console.error("Failed: ", operation);
                     deferred.reject('Problem loading: ' + operation.error.errors.join('. '));
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***);
+                }
+            }
+        });
         return deferred.promise;
-    ***REMOVED***,
+    },
 
-    loadAStoreWithAPromise: function(model_name, model_fields)***REMOVED***
+    loadAStoreWithAPromise: function(model_name, model_fields){
         var deferred = Ext.create('Deft.Deferred');
 
-        Ext.create('Rally.data.wsapi.Store', ***REMOVED***
+        Ext.create('Rally.data.wsapi.Store', {
             model: model_name,
             fetch: model_fields
-        ***REMOVED***).load(***REMOVED***
-            callback : function(records, operation, successful) ***REMOVED***
-                if (successful)***REMOVED***
+        }).load({
+            callback : function(records, operation, successful) {
+                if (successful){
                     deferred.resolve(this);
-                ***REMOVED*** else ***REMOVED***
+                } else {
                     console.error("Failed: ", operation);
                     deferred.reject('Problem loading: ' + operation.error.errors.join('. '));
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***);
+                }
+            }
+        });
         return deferred.promise;
-    ***REMOVED***
-***REMOVED***);
+    }
+});
