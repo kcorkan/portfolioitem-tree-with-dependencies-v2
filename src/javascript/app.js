@@ -16,7 +16,8 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
             showFilter: true,
             allowMultiSelect: false,
             colorOption: 'Implied State',
-            displayName: false  
+            displayName: false,
+            showPresentation: false 
         ***REMOVED***
     ***REMOVED***,
      
@@ -444,22 +445,37 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", ***REMOVED***
         _dataPanel: function(node, index, array) ***REMOVED***        
             var childField = node.data.record.hasField('Children')? 'Children' : 'UserStories';
             var model = node.data.record.hasField('Children')? node.data.record.data.Children._type : 'UserStory';
-            
+            this.publish('showPortfolioDetail',node); //.data.record.getData());
+
+            console.log('publishing',node.data.record, node);
             if (model != "UserStory")***REMOVED***
-                Ext.create('Rally.app.portfolioitem.DetailWindow',***REMOVED***
-                    record: node.data.record,
-                    model: model,
-                    childField: childField,
-                    cardFieldDisplayList: gApp.CARD_DISPLAY_FIELD_LIST,
-                    portfolioItemTypes: this.portfolioItemTypes,
-                    height: this.getHeight() * .90,
-                    width: this.getWidth() * .75,
-                    context: this.getContext()
-                ***REMOVED***);
+                if (this.getShowPresentation())***REMOVED***
+                    Ext.create('Rally.app.portfolioitem.PresentationPanel',***REMOVED***
+                        record: node.data.record,
+                        node: node,
+                        height: this.getHeight() * .90,
+                        width: this.getWidth() * .75,
+                        context: this.getContext()
+                    ***REMOVED***);
+                ***REMOVED*** else ***REMOVED***
+                    Ext.create('Rally.app.portfolioitem.DetailWindow',***REMOVED***
+                        record: node.data.record,
+                        model: model,
+                        childField: childField,
+                        cardFieldDisplayList: gApp.CARD_DISPLAY_FIELD_LIST,
+                        portfolioItemTypes: this.portfolioItemTypes,
+                        height: this.getHeight() * .90,
+                        width: this.getWidth() * .75,
+                        context: this.getContext()
+                    ***REMOVED***);
+                ***REMOVED***
+                
             ***REMOVED***
             
         ***REMOVED***,
-    
+        getShowPresentation: function()***REMOVED***
+            return this.getSetting('showPresentation') === true || this.getSetting('showPresentation') === "true";
+        ***REMOVED***,
         _dataCheckForItem: function(d)***REMOVED***
             return "";
         ***REMOVED***,
