@@ -1,17 +1,17 @@
-.title ***REMOVED***
+.title {
     font-family: ProximaNova;
     font-weight: bolder;
     padding: 5px;
     font-size: 24px;
-***REMOVED***
-.subtitle ***REMOVED***
+}
+.subtitle {
     font-family: ProximaNova;
     font-weight: bold;
     font-size: 18px;
     padding: 5px;
     
-***REMOVED***
-.tableheadercell ***REMOVED***
+}
+.tableheadercell {
     font-weight: bold;
     border: 2px solid black;
     background-color: blue;
@@ -20,27 +20,27 @@
     width: 50%;
     font-size: 14px;
     font-weight: bolder;
-***REMOVED***
-.tablebodycell ***REMOVED***
+}
+.tablebodycell {
     font-family: ProximaNova;
     padding: 5px;
     font-size: 14px;
-***REMOVED***
+}
 
-.presentationtable ***REMOVED***
+.presentationtable {
     font-family: ProximaNova;
     table-layout: fixed;
     width: 95%;
     margin: 10px;
     border: 2px solid black;
     border-collapse: collapse;
-  ***REMOVED***
+  }
 
-  .left ***REMOVED***
+  .left {
       border-right-color: #999;
       border-right: 1px solid #CCC;
-  ***REMOVED***
-  .right ***REMOVED***
+  }
+  .right {
     border-left-color: #999;
     border-left: 1px solid #CCC;
-  ***REMOVED***
+  }

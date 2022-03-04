@@ -1,45 +1,45 @@
-var useObjectID = function(value,record) ***REMOVED***
-    if ( record.get('ObjectID') ) ***REMOVED***
+var useObjectID = function(value,record) {
+    if ( record.get('ObjectID') ) {
         return record.get('ObjectID');
-    ***REMOVED*** 
+    } 
     return 0;
-***REMOVED***;
+};
 
-var shiftDayBeginningToEnd = function(day) ***REMOVED***
+var shiftDayBeginningToEnd = function(day) {
     return Rally.util.DateTime.add(Rally.util.DateTime.add(Rally.util.DateTime.add(day,'hour',23), 'minute',59),'second',59);
-***REMOVED***;
+};
 
-Ext.define('mockStory',***REMOVED***
+Ext.define('mockStory',{
     extend: 'Ext.data.Model',
     fields: [
-        ***REMOVED***name:'ObjectID', type: 'int'***REMOVED***,
-        ***REMOVED***name:'Name',type:'string'***REMOVED***,
-        ***REMOVED***name:'PlanEstimate',type:'int'***REMOVED***,
-        ***REMOVED***name:'id',type:'int',convert:useObjectID***REMOVED***,
-        ***REMOVED***name:'ScheduleState',type:'string',defaultValue:'Defined'***REMOVED***
+        {name:'ObjectID', type: 'int'},
+        {name:'Name',type:'string'},
+        {name:'PlanEstimate',type:'int'},
+        {name:'id',type:'int',convert:useObjectID},
+        {name:'ScheduleState',type:'string',defaultValue:'Defined'}
     ]
-***REMOVED***);
+});
 
-Ext.define('mockIteration',***REMOVED***
+Ext.define('mockIteration',{
     extend: 'Ext.data.Model',
     fields: [
-        ***REMOVED***name:'ObjectID', type: 'int'***REMOVED***,
-        ***REMOVED***name:'Name',type:'string'***REMOVED***,
-        ***REMOVED***name:'StartDate',type:'auto'***REMOVED***,
-        ***REMOVED***name:'EndDate',type:'auto'***REMOVED***,
-        ***REMOVED***name:'id',type:'int',convert:useObjectID***REMOVED***
+        {name:'ObjectID', type: 'int'},
+        {name:'Name',type:'string'},
+        {name:'StartDate',type:'auto'},
+        {name:'EndDate',type:'auto'},
+        {name:'id',type:'int',convert:useObjectID}
     ]
-***REMOVED***);
+});
 
-Ext.define('mockCFD',***REMOVED***
+Ext.define('mockCFD',{
     extend: 'Ext.data.Model',
     fields: [
-        ***REMOVED***name:'CardCount',type:'int'***REMOVED***,
-        ***REMOVED***name:'CardEstimateTotal',type:'int'***REMOVED***,
-        ***REMOVED***name:'CardState',type:'string'***REMOVED***,
-        ***REMOVED***name:'CardToDoTotal',type:'int'***REMOVED***,
-        ***REMOVED***name:'CreationDate',type:'date'***REMOVED***,
-        ***REMOVED***name:'ObjectID',type:'int'***REMOVED***,
-        ***REMOVED***name:'TaskEstimateTotal',type:'int'***REMOVED***
+        {name:'CardCount',type:'int'},
+        {name:'CardEstimateTotal',type:'int'},
+        {name:'CardState',type:'string'},
+        {name:'CardToDoTotal',type:'int'},
+        {name:'CreationDate',type:'date'},
+        {name:'ObjectID',type:'int'},
+        {name:'TaskEstimateTotal',type:'int'}
     ]
-***REMOVED***);
+});

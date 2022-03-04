@@ -18,19 +18,19 @@
     -->
 
     <script type="text/javascript">
-        Rally.onReady(function() ***REMOVED***
+        Rally.onReady(function() {
             Rally.loadScripts(<%= JSON.stringify(js_files) %>,
-	            function() ***REMOVED***
-	                Rally.launchApp('<%= className %>', ***REMOVED***
+	            function() {
+	                Rally.launchApp('<%= className %>', {
 	                    name: '<%= name %>'
-	                ***REMOVED***)
-	            ***REMOVED***, true);
-        ***REMOVED***);
+	                })
+	            }, true);
+        });
     </script>
 <%
-    _.each( css_files, function(element) ***REMOVED*** 
+    _.each( css_files, function(element) { 
         print('<link rel="stylesheet" type="text/css" href="' + element + '">'); 
-     ***REMOVED***);
+     });
     
 %>
 

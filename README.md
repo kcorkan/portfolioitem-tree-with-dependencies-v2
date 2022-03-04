@@ -73,11 +73,11 @@ to Rally.  This resulting auth.json file should NOT be checked in.
   * auth.json: This file should NOT be checked in.  This file is needed for deploying
   and testing.  You can use the makeauth task to create this or build it by hand in this'
   format:
-    ***REMOVED***
+    {
         "username":"you@company.com",
         "password":"secret",
         "server": "https://rally1.rallydev.com"
-    ***REMOVED***
+    }
 
 ### Usage of the grunt file
 #### Tasks
@@ -110,23 +110,23 @@ You can use the makeauth task to create this file OR construct it by hand.  Caut
 makeauth task will delete this file.
 
 The auth.json file must contain the following keys:
-***REMOVED***
+{
     "username": "fred@fred.com",
     "password": "fredfredfred",
     "server": "https://us1.rallydev.com"
-***REMOVED***
+}
 
 (Use your username and password, of course.)  NOTE: not sure why yet, but this task does not work against the demo environments.  Also, .gitignore is configured so that this file does not get committed.  Do not commit this file with a password in it!
 
 When the first install is complete, the script will add the ObjectIDs of the page and panel to the auth.json file, so that it looks like this:
 
-***REMOVED***
+{
     "username": "fred@fred.com",
     "password": "fredfredfred",
     "server": "https://us1.rallydev.com",
     "pageOid": "52339218186",
     "panelOid": 52339218188
-***REMOVED***
+}
 
 On subsequent installs, the script will write to this same page/app. Remove the
 pageOid and panelOid lines to install in a new place.  CAUTION:  Currently, error checking is not enabled, so it will fail silently.

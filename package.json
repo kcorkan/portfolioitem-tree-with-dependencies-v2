@@ -1,16 +1,16 @@
-***REMOVED***
+{
   "_comment": "This file is used by grunt",
   "name": "tsabc",
   "version": "0.2.0",
-  "scripts": ***REMOVED***
+  "scripts": {
     "debug": "grunt debug",
     "debug:watch": "nodemon --exec grunt debug",
     "deploy:watch": "nodemon --exec grunt deploy",
     "deploy-pretty:watch": "nodemon --exec grunt deploy-pretty",
     "deploy-debugsdk:watch": "nodemon --exec grunt deploy-debugsdk"
-  ***REMOVED***,
-  "dependencies": ***REMOVED******REMOVED***,
-  "devDependencies": ***REMOVED***
+  },
+  "dependencies": {},
+  "devDependencies": {
     "grunt": "^1.4.1",
     "grunt-cli": "1.2.0",
     "grunt-contrib-jasmine": "1.1.0",
@@ -23,5 +23,5 @@
     "request": "2.67",
     "underscore": "^1.13.1",
     "username": "2.1.0"
-  ***REMOVED***
-***REMOVED***
+  }
+}

@@ -1,50 +1,50 @@
-Ext.define('Rally.apps.Legend',***REMOVED***
+Ext.define('Rally.apps.Legend',{
     extend: 'Ext.Component',
     alias: 'widget.legend',
     /**
-     * @cfg ***REMOVED***String***REMOVED***
+     * @cfg {String}
      * define a width if necessary to fit where it's being used
      */
     width: '160px',
     /**
-     * @cfg ***REMOVED***String***REMOVED***
+     * @cfg {String}
      * define a height if necessary to fit where it's being used
      */
     height: '160px',
 
     renderTpl: new Ext.XTemplate(
         '<tpl>',
-        '<div class="legend-title">***REMOVED***title***REMOVED***</div>',
+        '<div class="legend-title">{title}</div>',
         '<tpl for="colors">',
-            '<div class="legend"><span class="legend-dot ***REMOVED***legendcls***REMOVED***"></span>***REMOVED***legendtext***REMOVED***</div>',
+            '<div class="legend"><span class="legend-dot {legendcls}"></span>{legendtext}</div>',
         '</tpl></tpl>'
     ),
-    _buildLegendData: function(colorOption)***REMOVED***
-            var data = ***REMOVED***
+    _buildLegendData: function(colorOption){
+            var data = {
                 title: colorOption,
                 colors: []
-            ***REMOVED***;
-            if (colorOption === 'Implied State')***REMOVED***
-                data.colors.push(***REMOVED***legendcls: 'not-defined', legendtext: 'Not Defined' ***REMOVED***);
-                data.colors.push(***REMOVED***legendcls: 'not-started', legendtext: 'Not Started' ***REMOVED***);
-                data.colors.push(***REMOVED***legendcls: 'in-progress', legendtext: 'In Progress' ***REMOVED***);
-                data.colors.push(***REMOVED***legendcls: 'done', legendtext: 'Done' ***REMOVED***);
-            ***REMOVED***
-            if (colorOption === 'Health Color by Count' || colorOption === "Health Color by Estimate")***REMOVED***
-                data.colors.push(***REMOVED***legendcls: 'health-white', legendtext: 'Not Started' ***REMOVED***);
-                data.colors.push(***REMOVED***legendcls: 'health-green', legendtext: 'On Track' ***REMOVED***);
-                data.colors.push(***REMOVED***legendcls: 'health-yellow', legendtext: 'At Risk' ***REMOVED***);
-                data.colors.push(***REMOVED***legendcls: 'health-red', legendtext: 'Late' ***REMOVED***);
-                data.colors.push(***REMOVED***legendcls: 'health-gray', legendtext: 'Complete' ***REMOVED***);
-            ***REMOVED***
+            };
+            if (colorOption === 'Implied State'){
+                data.colors.push({legendcls: 'not-defined', legendtext: 'Not Defined' });
+                data.colors.push({legendcls: 'not-started', legendtext: 'Not Started' });
+                data.colors.push({legendcls: 'in-progress', legendtext: 'In Progress' });
+                data.colors.push({legendcls: 'done', legendtext: 'Done' });
+            }
+            if (colorOption === 'Health Color by Count' || colorOption === "Health Color by Estimate"){
+                data.colors.push({legendcls: 'health-white', legendtext: 'Not Started' });
+                data.colors.push({legendcls: 'health-green', legendtext: 'On Track' });
+                data.colors.push({legendcls: 'health-yellow', legendtext: 'At Risk' });
+                data.colors.push({legendcls: 'health-red', legendtext: 'Late' });
+                data.colors.push({legendcls: 'health-gray', legendtext: 'Complete' });
+            }
            return data; 
-    ***REMOVED***,
-    constructor: function (config) ***REMOVED***
-        config = config || ***REMOVED******REMOVED***;
+    },
+    constructor: function (config) {
+        config = config || {};
        
         this.renderData = this._buildLegendData(config.title);
        
         this.mergeConfig(config);
         this.callParent([this.config]);
-    ***REMOVED***    
-***REMOVED***);
+    }    
+});

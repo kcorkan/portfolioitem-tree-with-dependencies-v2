@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .DS_Store
 .grunt/
 grunt/
@@ -12,3 +13,19 @@ deploy/app.min.js
 .settings
 deploy/ConfluenceApp.txt
 deploy/ExternalApp.txt
+||||||| empty tree
+=======
+.DS_Store
+.grunt/
+grunt/
+/node_modules/
+auth.json*
+App-debug.html
+_SpecRunner.html
+/test/logs/
+deploy/app.min.js
+.project
+.settings
+deploy/ConfluenceApp.txt
+deploy/ExternalApp.txt
+>>>>>>> refs/remotes/origin/main
