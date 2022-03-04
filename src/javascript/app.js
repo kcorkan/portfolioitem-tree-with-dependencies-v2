@@ -16,7 +16,8 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             showFilter: true,
             allowMultiSelect: false,
             colorOption: 'Implied State',
-            displayName: false  
+            displayName: false,
+            showPresentation: false 
         }
     },
      
@@ -444,22 +445,37 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
         _dataPanel: function(node, index, array) {        
             var childField = node.data.record.hasField('Children')? 'Children' : 'UserStories';
             var model = node.data.record.hasField('Children')? node.data.record.data.Children._type : 'UserStory';
-            
+            this.publish('showPortfolioDetail',node); //.data.record.getData());
+
+            console.log('publishing',node.data.record, node);
             if (model != "UserStory"){
-                Ext.create('Rally.app.portfolioitem.DetailWindow',{
-                    record: node.data.record,
-                    model: model,
-                    childField: childField,
-                    cardFieldDisplayList: gApp.CARD_DISPLAY_FIELD_LIST,
-                    portfolioItemTypes: this.portfolioItemTypes,
-                    height: this.getHeight() * .90,
-                    width: this.getWidth() * .75,
-                    context: this.getContext()
-                });
+                if (this.getShowPresentation()){
+                    Ext.create('Rally.app.portfolioitem.PresentationPanel',{
+                        record: node.data.record,
+                        node: node,
+                        height: this.getHeight() * .90,
+                        width: this.getWidth() * .75,
+                        context: this.getContext()
+                    });
+                } else {
+                    Ext.create('Rally.app.portfolioitem.DetailWindow',{
+                        record: node.data.record,
+                        model: model,
+                        childField: childField,
+                        cardFieldDisplayList: gApp.CARD_DISPLAY_FIELD_LIST,
+                        portfolioItemTypes: this.portfolioItemTypes,
+                        height: this.getHeight() * .90,
+                        width: this.getWidth() * .75,
+                        context: this.getContext()
+                    });
+                }
+                
             }
             
         },
-    
+        getShowPresentation: function(){
+            return this.getSetting('showPresentation') === true || this.getSetting('showPresentation') === "true";
+        },
         _dataCheckForItem: function(d){
             return "";
         },
