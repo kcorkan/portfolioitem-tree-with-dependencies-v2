@@ -32,11 +32,11 @@ Ext.define("Rally.app.portfolioitem.PresentationPanel",{
    portfolioItemTypes: [],
 
    //Presentation panel settings 
-   impactFieldName: 'Notes',
-   displayFieldName: '',
-   colHeader1: 'Delivered Output',
-   colHeader2: 'Impact',
-   subtitle: 'Retrospective:  What did we accomplish over the last quarter?',
+   displayField: null,
+   impactField: '',
+   colHeader1: '',
+   colHeader2: '',
+   subtitle: '',
    node: null, 
    
    constructor: function(config) {
@@ -60,10 +60,10 @@ Ext.define("Rally.app.portfolioitem.PresentationPanel",{
            '<tr class="tableheader"><td class="tableheadercell">{colheader1}</td><td class="tableheadercell">{colheader2}</td></tr>',
            '<tpl for="children">',     // interrogate the kids property within the data
                '<tr><td class="tablebodycell left">{Name}</td><td class="tablebodycell right">{_impact}</td></tr>',
-               '<tpl for="children">',
-                    '<tr><td class="tablebodycell left"><li>{Name}</td><td class="tablebodycell right">',
-                     '<tpl if="_impact"><li>{_impact}</tpl></td></tr>',
-               '</tpl>',
+             //  '<tpl for="children">',
+             //       '<tr><td class="tablebodycell left"><li>{Name}</td><td class="tablebodycell right">',
+             //        '<tpl if="_impact"><li>{_impact}</tpl></td></tr>',
+             //  '</tpl>',
            '</tpl>',
            '</table>'
        );
@@ -80,23 +80,24 @@ Ext.define("Rally.app.portfolioitem.PresentationPanel",{
        renderData.subtitle = this.subtitle;
        renderData.colheader1 = this.colHeader1;
        renderData.colheader2 = this.colHeader2;
-       //assign _impact field 
+       renderData.impactField = this.impactField;
 
+       //assign _impact field 
        var impactField = this.impactField,
            displayField = this.displayField; 
+       
        for (var i=0; i<item.children.length; i++){
            var child = item.children[i].data.record.getData();
-           child.children = [];
-           console.log('child',child);
-           if (item.children[i].children && item.children[i].children.length > 0){
-               for (j=0; j<item.children[i].children.length; j++){
-                   var grandchild = item.children[i].children[j].data.record.getData();
-                   if (!displayField || child[displayField]){
-                        grandchild._impact = grandchild[impactField] || "";
-                        child.children.push(grandchild);
-                    }
-               }
-           }
+        //    child.children = [];
+        //    if (item.children[i].children && item.children[i].children.length > 0){
+        //        for (j=0; j<item.children[i].children.length; j++){
+        //            var grandchild = item.children[i].children[j].data.record.getData();
+        //            if (!displayField || child[displayField]){
+        //                 grandchild._impact = grandchild[impactField] || "";
+        //                 child.children.push(grandchild);
+        //             }
+        //        }
+        //    }
            if (!displayField || child[displayField]){
                child._impact = child[impactField] || "";
                renderData.children.push(child);
