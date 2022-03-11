@@ -449,10 +449,6 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
         _dataPanel: function(node, index, array) {        
             var childField = node.data.record.hasField('Children')? 'Children' : 'UserStories';
             var model = node.data.record.hasField('Children')? node.data.record.data.Children._type : 'UserStory';
-            this.publish('showPortfolioDetail',node); //.data.record.getData());
-
-            console.log('publishing',node.data.record, node);
-            
             if (model != "UserStory"){
                 if (this.getShowPresentation()){
                     var prezSettings = this.getPrezSettings();
