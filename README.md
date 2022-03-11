@@ -34,11 +34,11 @@ In this version of the app, the implied state is used in several places.  The im
 * Display Item names at all levels - Warning when using this the app can look cluttered
 * Dot Color - Determines what field or state should be used to color the node dots
 * Presentation View Settings
-** Subtitle 
-** Left Column Header
-** Right Column Header
-** Impact Field - Text from this field is listed in the right hand column of the presenation view 
-** Display Field (Optional) - If this field is empty, all children will be displayed in the table.  If populated, only children with this field populated will be displayed in the table.
+  - Subtitle 
+  - Left Column Header
+  - Right Column Header
+  - Impact Field - Text from this field is listed in the right hand column of the presenation view 
+  - Display Field (Optional) - If this field is empty, all children will be displayed in the table.  If populated, only children with this field populated will be displayed in the table.
 
 ## Development Notes
 
