@@ -21,7 +21,8 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             prezColHeader1: 'Delivered Output',
             prezColHeader2: 'Impact',
             prezImpactField: 'Notes',
-            prezDisplayField: null
+            prezDisplayField: null,
+            timeboxFilterPicker: true 
         }
     },
      
@@ -686,7 +687,11 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
         onTimeboxScopeChange: function(newTimebox) {
             this.callParent(arguments);
             gApp.timeboxScope = newTimebox;
-            gApp.loadAppData();
+            if (this.getTimeboxFilterPicker()){
+                gApp.portfolioItemSelected(this.down('#piType'));
+            } else {
+                gApp.loadAppData();
+            }
         },
     
         _onFilterChange: function(inlineFilterButton){
@@ -698,13 +703,40 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
         _onFilterReady: function(inlineFilterPanel) {
             gApp.down('#filterBox').add(inlineFilterPanel);
         },
-    
+        getTimeboxFilterPicker: function(){
+            return this.getContext().getTimeboxScope() && this.getSetting('timeboxFilterPicker') === true || this.getSetting('timeboxFilterPicker') === 'true';
+        },
         portfolioItemSelected: function(piTypeSelector) {
             console.log('selector',piTypeSelector.getRecord());
             var model = piTypeSelector.getRecord().get('TypePath');
             var hdrBox = gApp.down('#headerBox');
             var portfolioFilters = Rally.data.wsapi.Filter.fromQueryString("((LeafStoryCount > 0) AND (State.Name != \"Done\"))");
-            //gApp._typeStore = ptype.store;
+            if (this.down('#treeContainer')){
+                this.down('#treeContainer').destroy();
+            }
+            
+            if (this.getTimeboxFilterPicker()){
+                var timebox = this.getContext().getTimeboxScope().record;
+                var rootRecordLevel = this._getSelectedOrdinal(); 
+                var property = "Release";
+                for (var i=rootRecordLevel; i>0; i--){
+                    property = "Children." + property;
+                }
+
+                var value = null; 
+                if (timebox){ 
+                    property = property + ".Name";
+                    value = timebox.get('Name');
+                } 
+
+                portfolioFilters = portfolioFilters.and({
+                    property: property,
+                    value: value
+                });              
+            }
+
+                
+
             var selector = gApp.down('#itemSelector');
             if ( selector) {
                 selector.destroy();
@@ -1262,8 +1294,8 @@ Ext.define("Rally.app.PortfolioItemTreeWithDependenceis", {
             // },
             {
                 xtype: 'rallycheckboxfield',
-                fieldLabel: 'Show Advanced filter',
-                name: 'showFilter',
+                fieldLabel: 'Filter Start Items by Childrens Release (if release scoped)',
+                name: 'timeboxFilterPicker',
                 labelAlign: 'top'
             },
             {

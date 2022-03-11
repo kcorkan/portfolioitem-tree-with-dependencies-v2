@@ -86,6 +86,7 @@ Ext.define("Rally.app.portfolioitem.PresentationPanel",{
        var impactField = this.impactField,
            displayField = this.displayField; 
        
+       if (!item.children){ item.children = []; }   
        for (var i=0; i<item.children.length; i++){
            var child = item.children[i].data.record.getData();
         //    child.children = [];
@@ -103,7 +104,6 @@ Ext.define("Rally.app.portfolioitem.PresentationPanel",{
                renderData.children.push(child);
            }
        }
-       console.log('rednerData',renderData)
        return renderData;
    }       
     

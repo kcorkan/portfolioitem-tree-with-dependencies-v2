@@ -3,6 +3,9 @@
 This version has been forked and modified from the original version that can be found here:
 https://github.com/nikantonelli/PortfolioItem-Tree-With-Dependencies 
 
+This app can support a release scoped dashboard.  
+If a release is selected, then only the portfolio items in the tree that have children associated with that release will be displayed. 
+If unscheduled is selected, then only items with unscheduled children will be displayed.  
 
 ## Summary/Description
 
@@ -31,6 +34,7 @@ In this version of the app, the implied state is used in several places.  The im
 ### App Settings 
 * Hide Archived - hides archived portfolio items 
 * Add Preliminary Estimate Size to titles
+* Filter Start Items by Release (if release scoped) - If true, this will filter the start item picker to only items that have lowest level portfolio items that match the selected release (or don't have low level portfolio items scheduled into a release if Unscheduled is selected) 
 * Display Item names at all levels - Warning when using this the app can look cluttered
 * Dot Color - Determines what field or state should be used to color the node dots
 * Presentation View Settings
