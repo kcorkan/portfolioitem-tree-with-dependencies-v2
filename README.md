@@ -18,6 +18,8 @@ Changes from the original version:
 - removed cumulative flow chart from detail view 
 - removed filter from view (this may be added back in)
 - removed grids from detail view
+- added a new presenation view with configurable fields on it
+- added a toggle to toggle between detail view and presentation view 
 
 ### Implied State 
 In this version of the app, the implied state is used in several places.  The implied state of a portfolio item uses existing fields to determine what state the portfolio item is in.  The implied states here are: 
@@ -25,6 +27,18 @@ In this version of the app, the implied state is used in several places.  The im
 * Not Started (ActualStartDate not populated)
 * In Progress (ActualStartDate populated, ActualEndDate not populated)
 * Done (ActualEndDate populated)
+
+### App Settings 
+* Hide Archived - hides archived portfolio items 
+* Add Preliminary Estimate Size to titles
+* Display Item names at all levels - Warning when using this the app can look cluttered
+* Dot Color - Determines what field or state should be used to color the node dots
+* Presentation View Settings
+** Subtitle 
+** Left Column Header
+** Right Column Header
+** Impact Field - Text from this field is listed in the right hand column of the presenation view 
+** Display Field (Optional) - If this field is empty, all children will be displayed in the table.  If populated, only children with this field populated will be displayed in the table.
 
 ## Development Notes
 
